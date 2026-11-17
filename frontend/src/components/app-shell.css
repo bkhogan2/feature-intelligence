@@ -1,0 +1,26 @@
+/* Layout tokens extracted from referral-focus 2a28900, with generic branding. */
+:root {
+  --navigation-sidebar: var(--content-surface);
+  --navigation-sidebar-foreground: oklch(0.145 0 0);
+  --navigation-sidebar-divider: #dfdfdf;
+}
+.dark {
+  --navigation-sidebar: var(--content-surface);
+  --navigation-sidebar-foreground: oklch(0.96 0.004 255);
+  --navigation-sidebar-divider: oklch(1 0 0 / 12%);
+}
+.navigation-sidebar {
+  --sidebar: var(--navigation-sidebar);
+  --sidebar-foreground: var(--navigation-sidebar-foreground);
+  --sidebar-accent-foreground: var(--navigation-sidebar-foreground);
+  --sidebar-accent: color-mix(
+    in oklch,
+    var(--navigation-sidebar-foreground) 10%,
+    transparent
+  );
+  --sidebar-border: color-mix(
+    in oklch,
+    var(--navigation-sidebar-foreground) 14%,
+    transparent
+  );
+}

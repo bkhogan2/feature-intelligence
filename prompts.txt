@@ -1,0 +1,390 @@
+
+
+2026-11-14T06:10:36.251040+00:00
+User instruction: Okay, let's plan out the feature intelligence system before we start building. What screens and AI workflows should we implement first using the starter?
+Response summary: Proposed a focused first-version plan covering request submission/discovery/support, opportunity review, explicit strategy criteria, AI triage and decision briefs, human approval, and implementation order. Planning only; no feature implementation.
+
+2026-11-14T06:14:40.168151+00:00
+User instruction: Actually before we start picking screens, let's prioritize the business problems. Which business problems are the most important and why?
+Response summary: Distinguished business importance from implementation order. Prioritized allocating development effort to valuable problems, understanding needs across fragmented feedback, and reducing triage effort; discussed stakeholder communication and capture/discovery as supporting needs. Recommended evidence-backed opportunity synthesis as the assessment focus, with human-owned strategy and prioritization. No implementation.
+
+2026-11-14T06:21:20.528173+00:00
+User instruction: I'd say product manager, we'll get into that in a minute. ok so this is kind of like a pipeline right? We have to understand the underlying problem first right? then there are other things? can you map out the pipeline? it can be a dag if need be, or keep it simple if you can
+Response summary: Mapped feedback intake, need interpretation, related-evidence grouping, business-context enrichment, evaluation, human decision, stakeholder communication, and outcome learning; identified missing-evidence loop and parallel strategy context. Planning only.
+
+2026-11-14T06:30:41.528135+00:00
+User instruction: do you think we have enough to at least just implement a simple capture feedback feature? and can you save that mermaid diagram for the reviewers to take a look at? maybe in a markdown file?
+Response summary: Beginning workspace-scoped feedback capture (title/description), browse/search, validation and persistence, with existing admin/editor/viewer permissions. Saving reviewer-facing pipeline diagram. AI analysis remains planned.
+
+
+2026-11-14T06:32:25.906790+00:00
+Delegated implementation instruction: Implement the first feedback capture slice with title/description, authenticated attribution, workspace isolation, browse/search, admin/editor submit and viewer read. Preserve pipeline documentation, use isolated tests, and do not initialize Git or publish.
+Response summary: Inspecting the starter and implementing a dedicated feedback model/table/API/page with validation and PostgreSQL security tests.
+
+2026-11-14T06:36:30.199704+00:00
+Implementation completion for the feedback-capture instruction above.
+Response summary: Added dedicated feedback models, migration 0005 and schema-version guard, authenticated workspace-scoped submit/search APIs, forced RLS attribution/role checks, atomic creation audit, and React capture/browse page with pagination and loading/empty/error states. Updated pipeline boundary and README. Validation: full backend suite 62 passed/1 optional Firebase skip; final feedback suite 15 passed after adding two NUL-input cases; Ruff passed; frontend build and 21 existing Bun tests passed. Headless Chrome with mocked APIs passed loading/empty/no-match, required form fields, failed-submit draft retention, success/search/retry, viewer access, and mobile-width checks; PostgreSQL persistence/security were tested separately in isolated temporary databases. No existing databases migrated, Git initialized, commits, remote repo, or publication. Original starter and other projects untouched.
+2026-11-14T06:41:19.518693+00:00
+User instruction: I think that can be useful actually. I think the AI grabbing more context from the user can be super helpful. However I think the pipeline and managing request life cycles are higher priority. if we have time we can come back to it. As for now can you take a look at the agents progress on the submission form? And pull it up so I can see it
+Response summary: Inspecting completed capture form and preparing an isolated local preview. Prioritize pipeline/lifecycle; AI clarification deferred.
+
+2026-11-14T06:47:22.758005+00:00
+User instruction: looks like the app crashed
+Response summary: Diagnosing unavailable local preview; both API and frontend listeners stopped. Restarting as detached local preview services and verifying availability.
+
+
+2026-11-14T06:54:21.900192+00:00
+User instruction: Can you submit some test feedback? Should we come up with a product or something? Maybe the feature intelligence product itself? lol we can literally make the requests for the app itself right? that would actually help us track our work too
+User follow-up: please have an astra agent do that
+Delegated instruction: Submit approximately eight clearly marked demo feature requests about this product to the isolated local preview, prioritize pipeline/lifecycle, grouping, evidence/prioritization and decision communication, check duplicates and verify persistence. No product code changes, Git initialization, commits, remotes or publication.
+Response summary: Astra agent is inspecting the feedback API, preparing synthetic product requests, and checking existing preview feedback before submission.
+
+2026-11-14T06:55:20.765961+00:00
+Completion of delegated demo-feedback submission instruction above.
+Response summary: Submitted eight explicitly [Demo] synthetic feature requests through the authenticated local preview API in workspace preview after verifying the list was empty. Covered lifecycle stages, owners/next actions, transition history, related-request grouping, evidence/gaps, explicit prioritization, decision communication, and deferred context clarification. A fresh paginated GET verified all eight titles and full descriptions persisted; no duplicates were created. All records state that they are planning/test data, not customer evidence or implemented capabilities. Only preview feedback data and this required prompt log changed; no product code or Git/publication actions.
+
+2026-11-14T06:57:49.167955+00:00
+User instruction: can you show me a mockup right here in the chat of what you have in mind? It can even be a wireframe diagram
+Response summary: Provided an inline text wireframe of the proposed PM inbox, original feedback, AI triage suggestions, and explicit PM approval controls; no product implementation changes.
+
+2026-11-14T06:59:16.722867+00:00
+User instruction: Ok I like that. Are there shadcn components somewhere that already look like this?
+Response summary: Checked official shadcn blocks and resizable documentation and local UI component inventory; recommended composing inbox from existing starter components and resizable panels. Old official mail example URL returned 404. No implementation changes.
+
+2026-11-14T07:12:40.994536+00:00
+User instruction: Yeah I have access. Can you grab the code from the site and have Astra adapt it into the inbox like we discussed?
+Delegated instruction: Adapt licensed Shadcn UI Kit Mail App 5 into the existing shell and authenticated feedback API. Preserve capture, permissions, workspace isolation and CopilotKit. Implement responsive inbox visual review; do not invent persisted lifecycle or AI capabilities, enable models, initialize Git, commit, or publish.
+Response summary: Read AGENTS.md/CLAUDE.md and retrieved Mail App 5 main source from authorized signed-in site. Implementing domain-specific sidebar and reader because sibling sources are not present in that panel; documenting provenance and validating local preview.
+
+2026-11-14T07:16:35.596277+00:00
+Completion of delegated Mail App 5 inbox adaptation.
+Response summary: Added #inbox and rail entry, reused existing workspace sidebar for New/all captured requests plus disabled planned stages, and adapted searchable request list/detail layout to authenticated workspace feedback API. Added pagination, loading/error/empty states, original text/metadata, explicit AI-not-configured and unavailable PM decisions, and container-responsive list/detail navigation. Capture page and existing CopilotKit assistant preserved; opening assistant collapses secondary navigation. Source scope documented in INBOX_PROVENANCE.md. Validation: production build passed, final TypeScript check and all 21 Bun tests passed. Chrome live preview verified eight persisted requests, positive search, no-match/clear search, detail selection, preserved capture form, disabled assistant warning, sidebar coexistence and 390px mobile list/detail/back without horizontal overflow. Saved review screenshot to /private/tmp/feature-inbox-review.jpg. No backend/database mutations, models enabled, Git initialization, commits, repos or publication.
+
+2026-11-14T07:20:26.979871+00:00
+User instruction: looks good! can you make that email inbox thing resizable? (circled divider between list and detail)
+Response summary: Reused accessible panel resize handle for inbox list, persisted width preference, constrained by available container width, preserved mobile list/detail layout. Validating build.
+
+2026-11-14T07:30:09.455983+00:00
+User instruction: let's have a sub agent remove this search feedback from the capture feedback page.
+Delegated interpretation: Remove the search-and-results section from capture; browsing/search stays in Inbox. Preserve submission validation, errors, success and role checks.
+Response summary: Removing capture-page list fetching, search and pagination, and adding a View inbox link. No inbox layout, backend, data, Git or publication changes.
+
+2026-11-14T07:30:24.578378+00:00
+Completion of delegated capture-page cleanup.
+Response summary: Removed search, results, pagination and list-fetching state/effect from FeedbackPanel. Preserved form limits, required-field validation, admin/editor gating, workspace-scoped POST, submission pending/error/draft retention and success message. Added View inbox link and removed obsolete userId prop at the caller. Production build including TypeScript passed; source checks confirmed removal and preserved submission behaviors. No inbox, backend, data, Git or publication changes.
+
+2026-11-14T07:33:31.901841+00:00
+User instruction: Clean up weird UI transitions, layout config buttons, and colors without building a UI framework.
+Response summary: Removed conflicting route-driven sidebar changes, made assistant enable restore its open state, corrected page-header control positioning, softened neutral chrome/text/borders and disconnected assistant notice. Validating existing shell and build checks.
+Validation: production build and all 21 existing frontend tests passed. Live browser verified collapsed navigation remains collapsed across Home/Inbox/Settings and enabling Left and right reopens a previously collapsed assistant. Saved screenshot /private/tmp/inbox-layout-cleanup.png.
+
+2026-11-14T07:35:41.614471+00:00
+User instruction: Match the AI chat grey color to the other panels.
+Response summary: Unified navigation and assistant panel backgrounds on the same content-surface theme token as the inbox/detail, including dark mode. Removed separate hardcoded navigation grey and assistant fallback background.
+
+2026-11-14T07:41:09.191925+00:00
+User instruction: Ok let's have Astra set up react-markdown for the analysis pages while we work out the AI triage workflow.
+Delegated scope: Add direct react-markdown/remark-gfm dependencies and a reusable safe, accessible analysis renderer with scoped light/dark styling, illustrative fixture/docs and focused tests. No fabricated request analysis, workflow/backend changes or product navigation.
+Response summary: Checking library compatibility and implementing isolated renderer support without modifying shell, inbox or capture behavior.
+
+2026-11-14T07:43:38.411093+00:00
+Completion of delegated react-markdown setup.
+Response summary: Added direct react-markdown 10.1.0 and remark-gfm 4.0.1 dependencies/lockfile; reusable AnalysisMarkdown renderer with scoped theme-token CSS, accessible scrolling tables/code, GFM tasks/lists/footnotes, unique footnote references across instances, default safe URL handling, raw HTML skipped and image alt text only (no image loads). Added usage/security docs and explicitly illustrative development-only preview fixture. Production build/TypeScript passed and all 25 frontend tests passed, including four new rendering tests; final fixture link adjustment passed all four focused tests. Chrome verified light/dark styling, footnote/back navigation, no image elements, and contained table overflow at a 390px viewport with no page overflow. Screenshot: /private/tmp/analysis-markdown-preview.jpg. No AI/backend/database, inbox/shell/capture, product navigation, Git or publication changes.
+
+2026-11-14T07:44:44.841158+00:00
+User instruction: Ok let's have Astra build the support button while we focus on the AI triage. Can we use the Claude agent setup we already have for that workflow?
+Delegated scope: Implement persisted idempotent support/withdrawal by active workspace members, secure workspace/RLS isolation, unique per-request/user support, count/current-user flag, Inbox toggle, migration and tests. Root handles Claude workflow question. Migrate only isolated feature_intelligence_preview for live review; no original databases, AI implementation, Git or publication.
+Response summary: Inspecting current feedback API, membership/RLS and preview setup; implementing support independently from triage write permission.
+
+2026-11-14T07:47:53.559951+00:00
+Completion of delegated persisted support implementation.
+Response summary: Added schema migration 0006/support table with request-user uniqueness, workspace composite FK, forced read/insert/delete RLS and own-user-only mutations. Added idempotent authenticated POST/DELETE support APIs, count/current-user fields, explicit author-zero behavior, viewer support without feedback-edit permissions, and change-only audit events. Added Inbox detail Support/Supported toggle with pending/error/accessible pressed/status feedback; preserved resize, capture form and shell behavior. Full backend tests: 68 passed, 1 optional skip; focused feedback/PostgreSQL tests: 22 passed; frontend tests: 25 passed; production build/TypeScript and Ruff passed. Migrated only feature_intelligence_preview to version 6, checked all eight original feedback records byte-for-byte at field level before/after, and restarted only its API. Chrome verified support persists across reload, withdrawal persists across reload, and mobile control has no horizontal overflow. Live support test was withdrawn, restoring zero supporters on the tested request; audit records remain. Screenshot /private/tmp/feedback-support-preview.jpg. No original database migration, AI implementation, Git initialization/commit/repo or publication.
+
+2026-11-14T07:51:11.196550+00:00
+User instruction: Ok let's stick with our app. Can we have Astra start building the AI triage workflow using the Claude agent setup, starting with the Analyze request button and the three possible outcomes? if you need help configuring claude with an api key just let me know
+Delegated scope: Manual durable triage runs with three validated outcomes, scoped opportunity context, isolated Claude Agent SDK harness and bounded spend/time/concurrency, visible failure/retry, explicit human confirmation for any opportunity creation/linking; preserve existing features and migrate only isolated preview. No Git/publication.
+Response summary: Inspecting harness/auth/config and implementing triage separately from chat. Current process and project-local env files do not expose an Anthropic key; checking only the relevant preview service configuration and reporting setup needs.
+
+2026-11-14T07:59:12.190300+00:00
+Implementation/validation update for delegated AI triage workflow.
+Response summary: Added schema7 opportunities, feedback links and durable triage runs with forced RLS/composite workspace constraints; isolated Claude Agent SDK triage mode dispatched through existing agent_worker, read-only workspace tools, strict three-outcome schema and server validation of observed opportunity IDs/exact feedback quotations. Added bounded background runs (6 turns, $0.05 SDK budget, 1800 output tokens, 120-second parent timeout, 8 tool calls, 2 jobs per process), duplicate in-flight handling, visible failure/retry, lazy stale deadline recovery, and explicit human-confirmed create/link. Inbox renders saved suggestions/evidence via AnalysisMarkdown with model/time/version. Installed existing optional Claude SDK dependency; documented configuration and limitations. Full backend suite 84 passed/1 optional skip using mocked model events; frontend 25 passed, production build/TypeScript and Ruff passed. Migrated only feature_intelligence_preview to version7, verified all eight requests and zero support rows unchanged, restarted its API. Chrome verified disabled Analyze request and honest not-configured status; screenshot /private/tmp/triage-configuration-preview.jpg. No real Claude call made: no Anthropic key found in the authorized process/project configuration, reported to root for private local server setup. No fabricated production analysis/opportunities, AI auto-decisions, original database changes, Git initialization/commit/repo or publication.
+
+2026-11-14T08:00:00.436515+00:00
+User instruction: Start another subagent on opportunity page and ask whether there is an env file for API key.
+Response summary: Started opportunity_page subagent. Created private ignored backend/.env.local with blank key and enabled triage setting; configured isolated local preview launcher to load only those model settings on restart. No key stored in logs or source.
+2026-11-14T08:08:00.000000+00:00
+Delegated instruction: Investigate and narrowly fix a reported duplicate support control in the inbox detail without changing persisted votes or triage/backend behavior.
+Response summary: Audited all support-control call sites and inspected the live inbox accessibility tree; only one support control is rendered for the selected request, so the reported duplicate is not reproducible in the current build and no speculative UI change was made.
+2026-11-14T08:04:00.000000+00:00
+Delegated instruction: Build the persisted opportunity list/detail page from the triage contract, with linked evidence, AI analysis provenance, truthful empty states, and minimal PM decision presentation; preserve existing inbox and triage behavior.
+Response summary: Inspecting schema and API, extending the scoped opportunity read contract with linked feedback and confirmed analysis, then implementing the authenticated opportunity view and navigation.
+
+2026-11-14T08:06:44.194957+00:00
+User instruction: Ok I added the API key. Can you restart the backend and test analyzing one of our requests? and is that a duplicates bug? assign these to sub agents
+Delegated scope: Coordinate preview API/migration ownership, load private server config without exposing secrets, restart isolated preview API, perform one bounded real analysis of demo request, validate stored result and UI. Other agent owns duplicated support UI. Do not confirm opportunity or change support.
+Response summary: Checking configuration presence only and coordinating restart before real Claude validation.
+
+2026-11-14T08:10:36.123052+00:00
+Delegated instruction: Replace stopped worker with Astra and fix Support blocks accumulating during repeated request selection; preserve votes and existing UI.
+Response summary: Inspecting request reconciliation, adding repeated-selection regression and validating live preview.
+
+2026-11-14T08:12:21.691954+00:00
+Duplicate Support validation: Confirmed original duplicate sibling keys reproduce two controls on the second distinct selection. Preserved article-level request key; added happy-dom regression covering 18 switches, counts, saved vote attribution, and aborted stale saves. All 27 frontend tests and production build pass. Live Chrome preview after reload retained exactly one Support through 16 switches; no live votes modified.
+
+2026-11-14T08:12:39.860580+00:00
+Completion of delegated backend restart and real triage validation.
+Response summary: Verified private key presence without printing it; coordinated API ownership and restarted only isolated preview. Read-only Anthropic models listing confirmed claude-haiku-5-5 account availability. Two attempts failed at CLI schema validation; diagnosed offline without inference: strict validator rejects OpenAPI discriminator keyword. Added standards-compatible schema export preserving oneOf/const and strict server validation, safe failure categories and reported-cost retention. Offline SDK startup then passed, 26 targeted triage/harness tests passed, and one corrected real analysis completed for demo decision-summary request cb38a753-bcfe-4b5e-bff2-7a52f422e7b1: run 927b48b1-fbc8-4a0f-b8a9-8bf73fda61a1, model claude-haiku-5-5, outcome new_opportunity, proposal Closing the loop on PM decisions for linked requesters, reported cost $0.00110193. Persisted Markdown explicitly identifies synthetic evidence; exact original quote validated. Chrome displayed saved Ready for review result and explicit human confirmation control; screenshot /private/tmp/triage-live-success.jpg. No opportunity confirmed/created/linked and feedback/support unchanged. Failed run history retained. Duplicate Support UI handled by separate Astra agent. No keys in logs/source, no Git or publication.
+
+2026-11-14T15:34:59.501214+00:00
+Delegated user instruction: Clear synthetic preview data and seed real internal feature requests for this project, including agent activation.
+Response summary: Coordinating safe checkpoints with triage and support agents; inspecting isolated database identity, foreign keys, RLS, and current capabilities before scoped transactional reset and authenticated API reseeding. Preserve users, settings, and audit history.
+
+2026-11-14T15:36:16.679407+00:00
+Preview project backlog reset completed.
+Response summary: Parent confirmed Claude and Support agents reached completed checkpoints; their diagnostic outcome remains above. Verified database feature_intelligence_preview and workspace 08f28461-95b6-4e53-a44c-7b463f823749 (preview), checked FK/RLS and no running jobs, then transactionally deleted only 8 [Demo] feedback rows, 1 support row, and 3 triage runs (0 links/opportunities). Preserved all 29 security audit rows and account/workspace/settings tables; no original starter database accessed. Authenticated as preview@example.com and created/read back exactly 12 project-specific requests via API. Each description explicitly identifies internal origin. Includes contextual assistant activation, opt-in automatic bounded Claude triage (manual already works), run comparison, human grouping correction, editable briefs, lifecycle, evidence provenance, related-request/support context, stakeholder updates, ownership, clarification replies, and changed-evidence review. Reusable content fixture scripts/preview_product_requests.json; runtime IDs in /private/tmp/project-preview-seeded-requests.json supplied to parent and test agents. Login verified, no inference run or fabricated opportunities/customer metrics, no Git or publication.
+
+2026-11-14T15:39:41.876155+00:00
+User instruction: The opportunity page is not scrolling; assign one Astra subagent to fix it while another connects the agent.
+Response summary: Diagnosing opportunity-only height and overflow layout, preserving all saved data and coordinating shared component edits.
+
+2026-11-14T15:41:37.292024+00:00
+Delegated user instruction: Connect contextual sidebar Claude assistant using bounded read-only workspace tools, preserve PM approvals and preview data.
+Response: Implementing server-validated selected feedback/opportunity context, scoped evidence tools, accurate UI copy, and focused verification.
+
+2026-11-14T15:43:05.527144+00:00
+Opportunity scroll fix validation: Replaced unbounded min-h-full with viewport-bounded height/min-height and explicit overflow. Desktop list/detail scroll independently; mobile uses a continuous vertical scroll. Live existing opportunity scrolled to Decision at desktop and through Linked evidence/Back to inbox at 390x844 mobile; viewport reset. Screenshots saved to /tmp/opportunity-scroll-desktop.jpg and /tmp/opportunity-scroll-mobile.jpg. No persisted data changed.
+
+2026-11-14T15:45:21.502505+00:00
+Contextual assistant implementation and verification completed.
+Response summary: Enabled preview sidebar using claude-haiku-5-5 in existing isolated SDK harness, allowlisted four read-only evidence tools with RLS and revalidated access, server-validated context IDs, bounded evidence retrieval and clickable source links, selected opportunity/feedback UI context, fresh-request and human approval copy. Preserved existing triage and all stored data. Backend assistant tests passed 11; frontend production build and assistant contract tests passed 9; live browser selected-opportunity answer completed at $0.0008 with source citation and accurate zero support count; citation opened the exact feedback and updated sidebar context. Screenshot /private/tmp/contextual-assistant-verified.png. Independent requests deliberately do not include prior transcript. No commits/publication.
+
+2026-11-14T15:47:35.717753+00:00 User requested approved triage leave New and opportunity status/decision notes. Implementing atomic triage lifecycle, scoped audited opportunity decisions, filters, migration and verification; preserving sidebar context and scrolling.
+
+2026-11-14T15:50:45.746389+00:00 Implemented requested lifecycle with additive schema8 migration and restarted local preview. PostgreSQL lifecycle/triage/feedback suite passed 40 tests; additional migration test passed (4 lifecycle tests total). Production frontend build and 27 existing tests passed; additional approval/next-selection DOM regression passed. Clarification/archive actions deferred, placeholders removed; preserving existing original evidence and assistant context.
+
+2026-11-14T15:51:53.958329+00:00 | User: Have another Astra build prioritization and walk actual lifecycle request through app. Response: Delegated prioritization to explicit Astra; began live dogfood analysis on existing lifecycle feedback, preserving evidence and accurate status notes.
+
+2026-11-14T15:52:10.450053+00:00 — Assigned agreed opportunity prioritization: evidence-grounded AI suggestions separate from PM priority/status, unknown effort until estimated, RLS/editor controls, compact detail/list UI. Read rules, coordinated lifecycle handoff, implementing focused migration9/modules and validation.
+
+2026-11-14T15:56:52.890951+00:00 — Completed priority implementation and migration9. Separate AI suggestion/PM confirmation, exact-quote validation, unknown PM effort, editor/admin + RLS enforcement, bounded isolated no-tool SDK assessment, detail controls/list sort. Validation: 40 backend integration/regression tests, 28 frontend tests, ruff, typecheck and production build pass. Parent owns browser validation on real lifecycle opportunity; no backlog reseed or lifecycle mutation performed by this agent.
+
+2026-11-14T15:59:15.337780+00:00 — Parent relayed user request to try prioritization on the actual lifecycle opportunity. Restarted local API with lifecycle context, ran real Claude priority assessment in Chrome, verified LOW suggestion citing the exact internal request and identifying weak evidence, unknown effort/dependencies and post-ship validation gaps. Left Accept priority untouched; opportunity remains Shipped and PM priority unset. Screenshots /private/tmp/priority-live-assessment.jpg and /private/tmp/priority-live-gaps.jpg. Actual SDK cost is not persisted by this path; no cost inferred.
+
+2026-11-14T15:59:38.920377+00:00 — User explicitly requested converting the actual automatic-triage request into an opportunity and seeing AI priority. Will review its real triage result, confirm appropriate match/new opportunity, verify Triaged state, run priority assessment, leave PM priority acceptance pending, and preserve lifecycle/history.
+
+2026-11-14T16:02:07.298667+00:00 — Completed authorized real workflow for request62bd0ce8-0982-4c23-9db3-652f13f3b877. Reviewed new-opportunity triage result and distinction from two existing opportunities, confirmed creation/link, verified request in Triaged, and ran AI priority assessment. New opportunity0110dd01-dfbd-41c1-ba65-d37a542c041c, Reliable automatic request triage on submission: AI Low, single internal source/0 supports, unknown effort/dependencies, unmeasured frequency/impact. Left PM priority unset and lifecycle Considering; other opportunities unchanged. Recorded triage cost$0.001059165; priority cost unavailable. Screenshot /private/tmp/automatic-triage-priority.jpg.
+
+2026-11-14T16:08:24.848784+00:00 — User requests Astra make the opportunity map sidebar resizable. Implementing middle list/detail separator using existing PanelResizeHandle and app-storage preferences, keyboard/pointer controls, constrained widths, independent desktop scrolling and stacked narrow layout. No backend or data changes.
+
+2026-11-14T16:10:45.705753+00:00 — Completed opportunity-map resizing. Reused PanelResizeHandle/app-storage, 260–640px bounds with360px reserved for details, actual-container responsive stacking, and detail evidence stacking below800px. Browser verified pointer334→434, ArrowRight→458, reload retained458, max640, independent detail/list scrolling, mobile390px stack with no horizontal overflow. Restored original browser viewport and surrounding widths. Production build/typecheck and28 frontend tests pass. Screenshot /private/tmp/opportunity-map-resizable.jpg. No backend or domain-data changes.
+
+2026-11-14T16:11:32.891159+00:00 — User steering: remove the two-column layout inside opportunity detail at ALL widths. Full-width vertical flow must be problem, AI analysis, priority, decision/history, then linked evidence last. Preserve completed outer map resizing. Removing evidence-side-column breakpoint and verifying wide/narrow layout.
+
+2026-11-14T16:12:46.974982+00:00 — Completed latest layout steering: removed inner evidence-side-column breakpoint entirely; detail is now an unconditional flex column with linked evidence after decision/history. Verified evidenceBelow=true and equal main/evidence widths at932px detail (852px content) and552px detail (472px content), outer resize260–640 still works; restored458px preference. Production build/typecheck pass. Screenshot /private/tmp/opportunity-evidence-bottom-wide.jpg.
+
+2026-11-14T16:15:15.955302+00:00 — User explicitly requests Astra separate potential impact, confidence and priority; include agreed product goals and internal-dogfood stage, avoid equating sparse evidence/zero votes with Low priority, and rerun actual automatic-triage opportunity. Implementing visible documented server context, independent structured fields and tests; preserve confirmed priority/lifecycle and old suggestions.
+
+2026-11-14T16:18:14.920102+00:00 — Completed priority-v2: separate potential impact/confidence/priority and goals tradeoff; visible documented server-configured product goals/stage snapshotted with bounded tenant-scoped alternatives; legacy results readable but require reassessment before acceptance; model-reported costs saved. 30 backend tests and28 frontend tests, lint/typecheck/build pass. Restarted preview and reran actual automatic-triage opportunity0110dd01-dfbd-41c1-ba65-d37a542c041c through UI. Real result: Medium impact, Low confidence, Medium suggested priority; useful removal of manual trigger balanced against unknown effort, spend/recovery scope and Q&A alternative. Two alternatives considered; cost displayed$0.001876. PM priority remains unset, status Considering, effort unknown. Screenshot /private/tmp/automatic-triage-priority-v2.jpg.
+
+2026-11-14T16:22:25.460024+00:00 — User authorizes accepting Medium priority on automatic-triage opportunity, separately recording Planned then In progress, and implementing opt-in automatic triage with durable recovery, bounded concurrency/spend, explicit human approval and tenant controls. Will preserve unknown effort and original evidence, verify with labeled internal acceptance data only, and report local-preview scope and final workspace setting.
+
+2026-11-14T16:32:24.461249+00:00 — User requests live automatic-triage acceptance submission. Browser controls repeatedly time out before capture; parent authorized purpose API fallback. Will enable preview only with $0.25 allocation and submit one clearly labeled internal test through capture endpoint, no Analyze/approval. Added PUT to CORS methods for workspace settings.
+
+2026-11-14T16:33:27.246991+00:00 — Live automatic triage API acceptance passed on single internal request76965271-af3d-4934-bbf1-1099ab0e2ece: queued/running/complete in8.5sec without Analyze, suggested existing opportunity, request stays New/unlinked and opportunities unchanged. Cost$0.000993075. Preview opt-in ON,$0.25/day allocation,$0.05reserved. Browser capture controls timed out; actual capture endpoint verified.53 backend and28 frontend tests pass; build/typecheck checked.
+
+2026-11-14T16:35:13.904216+00:00 — User requests actual browser capture verification, one distinct labeled browser acceptance test; mark automatic triage Shipped only after browser flow succeeds, preserving Medium/unknown effort and documenting local-preview bounds.
+
+2026-11-14T16:38:12.153513+00:00 — Actual browser capture verification succeeded: one Submit feedback click created browser acceptance request eeb979bc-12a2-4a8e-a82e-c31402418e22, cleared form and showed confirmation. Automatically completed without Analyze; UI Ready for review/New/unlinked, existing opportunity suggestion and model cost$0.000857. Browser navigation delay meant transient queued/running not observed in this second test (observed in prior API test). Saved authorized In progress→Shipped via UI at08:37:46 with explicit local-preview delivery, preserved human gate, allocation/overshoot and restart limitations. Medium priority/unknown effort/history preserved. Preview automation remains ON,$0.25 daily allocation. Screenshots /private/tmp/automatic-triage-browser-verified.jpg and /private/tmp/automatic-triage-shipped.jpg.
+
+2026-11-14T16:41:06.847674+00:00 | User: Review remaining feature requests and recommend next work for assessment readiness. Response: Read live preview feedback statuses, seeded backlog and current docs; assessing small human-review gaps versus submission packaging, without changing backlog or publishing.
+
+2026-11-14T16:43:36.056015+00:00 — User approves reviewer corrections and requires dogfooding in sync with actual lifecycle. Reuse existing internal reviewer-correction request; analyze/confirm/plan before edits, In progress at start, Shipped only after tests/live correction. Implement alternate existing target or edited new title/problem with original AI preserved, transactional validation, tenant/role/stale protections and audit. Clarification replies deferred.
+
+2026-11-14T16:46:24.409664+00:00 | User: Move automatic triage controls to actual Settings page and remove View inbox button from capture. Response: Moved existing workspace-scoped settings component to Settings > AI triage, removed capture settings and bottom View inbox button; retained post-submit direct request link.
+
+2026-11-14T16:47:56.621131+00:00 | User: Remove generic Records page from sidebar and app. Response: Removed page registration/render/component; disabled legacy Records navigation action so old events cannot navigate to retired screen. Existing data untouched.
+
+2026-11-14T16:51:21.889143+00:00 — Completed reviewer corrections with synchronized lifecycle: reused edd5ce04-8fc4-4882-aa22-22b63f3ddcf5, explicit new opportunity confirmation, PM Medium, Planned08:44:44/In progress08:44:49 before code, Shipped08:51:07 after validation. Migration11 preserves original AI and insert-only human decision snapshot; selectable existing target/edited new proposal, transactional revalidation/race protection.5 correction tests and related backend regressions,28 frontend tests/build/typecheck/lint pass. Single labeled synthetic browser fixture56f77bdb-a934-49c5-9c2e-f018866df706 demonstrated edited title/problem/reason and New→Triaged, persisted after reload; cost$0.002029. Export fixture is not customer demand or implementation scope. Screenshots /private/tmp/reviewer-correction-browser-verified.jpg and /private/tmp/reviewer-corrections-shipped.jpg.
+
+2026-11-14T16:53:00.898560+00:00 — User requests removal of redundant Feedback inbox link from opportunity-specific left sidebar only. Preserve global Inbox navigation and linked evidence; status filters not authorized.
+
+2026-11-14T16:53:52.877467+00:00 — User authorizes opportunity lifecycle sidebar filters: All/Considering/Planned/In progress/Shipped/Not pursuing. Implement URL-backed status, server filtering before bound, independent sorting, sensible selection/direct links, meaningful tests and browser read-only verification; no lifecycle mutations.
+
+2026-11-14T16:57:01.303139+00:00 — Opportunity sidebar filters complete: redundant Feedback inbox link removed; server applies status before newest30; URL preserves independent priority sort and deep-link selection, truthful empty states. Backend status/tenant/invalid/filter-before-bound test and5 reviewer regressions passed,2 routing tests/build/typecheck/lint passed. Browser verified Considering→priority→Shipped→Considering with two Medium Shipped items before unprioritized and excluded selection replaced; Planned empty truthful. No persisted data mutations. Screenshots /private/tmp/opportunity-shipped-priority-filter.jpg and /private/tmp/opportunity-considering-priority-filter.jpg.
+
+2026-11-14T17:14:25.232758+00:00 | User: Allow status changes without a reason. Response: Made decision note optional in UI/API/database migration12, retained immutable status/actor/time history and existing notes, adding blank/omitted-note integration coverage.
+
+2026-11-14T17:27:20.887275+00:00 — User authorizes automatic priority assessment after explicit triage approval, including reviewer-corrected targets; preserve confirmed priority and lifecycle. Dogfood request/Planned/In progress before coding, durable coalescing and stale protection, shared automatic allocation and clear Settings opt-in, bounded live verification before local Shipped. Migration12 optional notes preserved; use13.
+
+2026-11-14T17:34:29.298202+00:00 — Automatic priority implementation/tests ready: migration13, independent priority opt-in in Settings, durable post-approval queue with coalescing/evidence revisions and shared allocation.31 unique relevant backend tests and30 frontend tests/build/typecheck/lint passed. Browser complaint49e7fcab-34f6-4f47-b8bb-e72e27b2c513 submitted once; triage extracted review/outcome visibility need (cost$0.001798). Human corrected unsupported technical inference, confirmed new opportunity9703dd6d-288d-4767-ae42-70e51616625e; priority queued automatically31f7103b-0dea-4607-81e3-e75c491e5c97, no Assess clicked. Current shared allocation$0.25/$0.25 blocks start; requested explicit permission through parent for$0.30. Priority unaccepted, complaint Considering, implementation opportunityd655ac89-7ecb-4570-9f77-84e70ffe8922 Medium/In progress until live completion.
+
+2026-11-15T07:34:42.550270+00:00 | Voice instruction: make Tablecn/Kanban prototype primary app, clean environment and rebase onto main. Response: found both folders untracked under parent main (no prototype branch); saved frontend backup at [local path] integrating interface into primary while retaining production auth/backend; delegated Astra Requests, Opportunities and durable bulk backend integration; preserving original features and licensed source attribution.
+
+2026-11-15T07:35:22.975747+00:00 | Voice update: user is away from computer and using phone. Response: continue local implementation/verification with concise spoken updates; no deployment or remote preview started.
+
+2026-11-15T07:36:07.600538+00:00 | Voice instruction: prioritize fixing table spacing. Response: shared table now defines fixed selection/action/metadata columns with flexible title column and contained horizontal overflow at narrow widths; verifying rendered geometry.
+
+2026-11-15T07:38:01.656645+00:00 | Delegated primary backend promotion: implement transactional request/opportunity bulk persistence and durable board order, preserve tenant roles/lifecycle/audit; coordinate frontend contracts, add focused tests, no commits. Response: added migration 0014, bulk routes/store/models, shared lifecycle decision helper, archive restoration guard, integration tests and schema-version updates. Opportunity priority remains existing reviewed detail flow.
+
+2026-11-15T07:38:01.656855+00:00 | Follow-up from primary agent: copy board model tests, finish checks, document primary promotion and pending database/visual checks; do not repair system database/Docker. Response: copied test; frontend build and all 33 tests/301 assertions passed; backend Ruff passed. PostgreSQL integration attempt blocked by missing DB environment (no migration applied); Docker daemon unavailable and Homebrew PostgreSQL missing ICU. Added docs/PRIMARY_INTERFACE.md.
+
+2026-11-15T07:51:13.304891+00:00 | Voice decisions: Opportunities board tracks underlying problems and outcomes at high level; detailed delivery belongs in linked tracker; shipped means release, not verified problem resolution. User requests separate branch and home review before merge; accepts recommendation on visible priority checkpoint. Response: created feature/opportunities-review in parent repository. No merge/push/commit performed; existing app folders remain untracked, unrelated src/fetch.py preserved. Proposed visible priority plus lightweight pre-planning reminder, not another board column; implementation pending review branch work.
+
+2026-11-15T07:54:36.680071+00:00 | Voice request: implement AI prioritize bulk action on review branch. Accepted design: selected or all filtered opportunities across pages, comparative AI suggestions using evidence/goals, current vs proposed review with reasons/gaps, accept all/subset/edit before saving. Response: confirmed feature/opportunities-review, delegated Astra backend and frontend implementation; no merge/push, preserve human confirmation and existing policies.
+
+2026-11-15T07:57:42.725664+00:00 — Delegated bulk AI priority backend implementation and subsequent root guidance: added one comparative isolated worker request over up to 50 explicitly supplied IDs, existing evidence/product goals, review-only durable suggestions, per-item citation validation, atomic role/workspace-scoped confirmation with priority/evidence revision checks and audit. Reused priority ledger (no new migration); shared inherited $0.05 worker budget retained, larger bounded output allowance. Added eight non-DB tests; eight new plus four existing validation tests pass, targeted Ruff clean. Root delegated independent review in progress. No live model calls, commits, merges or pushes; pending migration 0014 integration remains unverified.
+
+2026-11-15T07:58:08.230606+00:00 — Independent batch-priority review found API callers omitting effort/dependencies could erase metadata. Fixed batch confirmation to preserve omitted stored values and added regression assertion. Accepted joint suggestions also reject priorities changed since the original assessment. Targeted Ruff clean and 12 unit tests pass again; no live model calls or DB integration claimed.
+
+2026-11-15T08:11:42.266533+00:00 | Voice request: add bulk human triage decisions; clarification humans should approve or archive requests in bulk. Response: implementing selected-suggestion review and explicit subset approval on feature/opportunities-review, retain durable archive/restore and individual correction paths; Astra backend/frontend delegated. No automatic grouping approval, no merge/push.
+
+2026-11-15T08:14:04.000811+00:00 | Bulk human triage implemented on review branch: selected saved suggestions, explicit subset acceptance/new opportunity counts, excluded unclear/failed/archived/stale targets, atomic approval preserving existing auto-priority enqueue settings, separate archive/restore and individual corrections. Astra independent review found archived target issue, fixed frontend/backend. Frontend build and 41 tests pass; backend Ruff and 3 nonDB tests pass. PostgreSQL integration unavailable due missing TEST_DATABASE config; no live AI calls/migration/commit/merge/push. Voice followups explained workflow and reconfirmed implementation.
+
+2026-11-15T09:29:56.479180+00:00 | User: can you pull all this up | Restarted frontend on 5189 and API on 8019. Existing preview services unavailable; initialized fresh local Docker database through migration 14 and built-in demo accounts, repaired initialization by invoking script with sh. Opened and signed into Alpha demo workspace in visible in-app browser at Opportunities. Empty state verified; prior preview data not recovered. No merge or push.
+
+2026-11-15T16:43:34.580736+00:00 | User: seed the data with real feature requests we want to implement for the app | Created reusable scripts/review_product_requests.json with 14 internal product proposals grounded in our discussion, explicitly not external customer demand; seeded 14 new requests through the authenticated API into Alpha demo workspace. Preserved existing records, priorities, and triage decisions; no AI analysis or external notifications triggered by this script.
+
+2026-11-15T17:01:06.885993+00:00 | User initially reported archived requests lost, then clarified they remain accessible and requested removing the archive toggle in favor of Status filter. Removed separate archive view state and button; table receives all requests so Archived filter/counts work. Clear filters shows all statuses. Bulk archive/restore operate on matching active/archived selections with explicit counts, and triage excludes archived selections. Updated archive regression coverage. Production build passed.
+
+2026-11-15T17:15:19.808226+00:00 | Follow-up instructions: clickable priorities and Requests Kanban; then user explicitly required actual Tablecn for both tables and licensed ShadcnUIKit Kanban 2 for boards/view toggles, preserving bulk actions. Imported nine unchanged official Tablecn components from ab52bf307da4d6ed006e686ebaf5db3be9391033 (TanStack v8); recorded source hashes and MIT attribution. Replaced custom toolbars/headers/filters/sort/view controls on both tables. Reopened authenticated Kanban 2 Get the Code, extracted actual Tabs markup, reused the licensed board/list composition through a Requests priority-column adapter; no triage status mutation on request drag. Kept bulk actions and inline Requests priority; added Opportunities inline priority through revision-checked API preserving effort/dependencies. Build and 42 frontend tests passed. Browser verified upstream Requests controls, Archived filter, priority menu and shared board/tabs; final table screenshot inspected. No live data edited for verification, no merge/push. Earlier interrupted clarification turns are recorded here without backdating.
+
+2026-11-15T09:17:15.378876-08:00 — User requested the rounded Kanban 2 view toggles shown in the reference. Kept the licensed Tabs composition and added scoped neutral pill styling, normal-weight labels, and shadowless active segments to the shared Requests/Opportunities view switch.
+
+2026-11-15T09:20:20.382147-08:00 — User requested Tablecn dropdown visual parity, icons instead of filter checkboxes, and neutral theming. Fixed cmdk false-selection styling, supplied status/priority icons and live counts, backported current upstream filter presentation to v8, and neutralized muted/accent surfaces. Kept bulk row selection and clickable priority editing.
+
+2026-11-15T09:26:42.678835-08:00 — User approved upgrading to current Tablecn and TanStack v9. Imported the current Radix dependency set, upgraded to 9.2.4, retired v8 table code, migrated controlled filters/selection and preserved priority/bulk actions. Added official shadcn CSS variants; validating build, regressions and browser preview on the unmerged review branch.
+
+2026-11-15T09:28:36.325917-08:00 — Upgrade verification complete: production build passed; 43 frontend tests / 372 assertions passed. Verified all 33 imported files match upstream except documented cn import mapping. Browser verified Requests title search and Archived filter; live Opportunities is empty, so its selection and pagination were verified using fixtures. Left review branch unmerged and local preview running on port 5189.
+
+2026-11-15T09:39:47.326812-08:00 | User asked why Alpha and Beta workspaces exist and whether features differ. Checked demo provisioning and isolation tests: both are sample workspaces with identical app features, separate workspace data, and demo admin membership. Explained distinction; no workspace changes.
+
+2026-11-15T09:40:57.975653-08:00 | User asked whether a GitHub-like detail page can be composed using Primer and whether it is frontend-compatible. Checked frontend React 19/TypeScript/Vite dependencies and official Primer requirements; confirmed architectural compatibility and explained composition, styling isolation, and visual verification needed. No UI changes yet.
+
+2026-11-15T09:49:55.322076-08:00 | User approved composing a GitHub-style detail page with actual Primer. Added official packages, shared full-page request/opportunity detail composition, preserved triage/support/priority/decision actions, and scoped theme integration. User then supplied GitHub screenshots and requested only relevant functionality; revised description author card, typography, timeline, and property rail against reference. Desktop browser verified; existing shell minimum width remains a mobile limitation. Changes remain on feature/opportunities-review, unmerged.
+2026-11-15T10:05:38-08:00 | User requested request-detail cleanup: remove request-level AI analysis controls, keep saved-suggestion human triage approval safeguards, avoid new workflow automation, and make supported status actions clear. Added review-only triage mode with no Analyze button or AI-run messaging; kept saved suggestion approval and bulk review path. Moved existing archive/restore action under Status, documented that Triaged requires reviewer approval, and moved priority guidance to opportunity stage. Frontend production build passes; no backend changes, live AI calls, merge, or push.
+2026-11-15T10:08:30-08:00 | Follow-up cleanup: removed duplicate review heading and replaced empty-state AI wording with a concise no-opportunity-linked message. Updated the Primer request-detail regression to assert opportunity-stage priority guidance and supported archive action. Targeted inbox tests pass (12/12, 159 assertions); production build passes. No backend changes, merge, or push.
+
+2026-11-15T10:14:01.982048-08:00 | User requested top-right Primer approve/archive actions, removal of status explanation, linked opportunity sidebar, and real persisted GitHub-style comments using Primer components. Implementing on review branch without merging.
+
+2026-11-15T10:17:09.236871-08:00 | Completed request header actions using Primer buttons, removed status guidance, moved opportunity link to sidebar, and added persisted request comments with Primer Write/Preview editor and Timeline. Local migration 15 applied; backend restarted. Database permission/isolation/idempotency/archive test passed; frontend suite/build passed; browser verified Markdown preview and layout without posting test comments. Remains unmerged.
+
+2026-11-15T10:23:07.800995-08:00 | User asked to move Archive/Approve to the title/status row aligned over the description and shorten Archive request to Archive. Moved existing Primer controls to a dedicated primary-actions slot; Previous/Next remain in breadcrumb row.
+
+2026-11-15T10:27:41.268124-08:00 | User requested actions on status row, searchable manual multiple opportunity linking with AI default suggestions, and explanation of disabled approval. Implementing manual linking/approval alongside existing AI suggestion flow on review branch.
+
+2026-11-15T10:31:26.482660-08:00 | Completed status-row actions, official Primer SelectPanel searchable multi-link sidebar, and manual approval independent of AI runs. Migration 16 preserves existing links and supports multiple targets; local migration applied/backend restarted. 15 database linking/bulk-triage regressions pass, frontend suite/build pass plus added manual approval regression. Browser verified picker empty state: Alpha has no opportunities yet. Existing AI suggestions are preselected; live automatic suggestions still require configured AI service. Unmerged.
+
+2026-11-15T10:40:07.535046-08:00 User requests AI creation/linking on approval, New/Approved/Rejected clickable status, remove activity and empty-link copy, move support into description header. Implementing and verifying on review branch.
+
+2026-11-15T10:42:57.462024-08:00 Completed request detail cleanup, compact Primer support control, clickable New/Approved/Rejected status (Approved maps to existing triaged storage), rejected-status migration17, approval-triggered AI matching/creation with manual linking preserved. Local migration applied and backend restarted. Full frontend47 tests and backend16 tests passed; added AI-unavailable regression; build/typecheck/lint passed. Browser verified; live AI unavailable because local server is not configured. Unmerged review branch.
+
+2026-11-15T10:50:26.095009-08:00 User requests red Reject with white X instead of Archive, status updates on decisions, remove request table priority and add compact check/X Decision column. Implementing shared approval and rejection behavior on review branch.
+
+2026-11-15T10:51:46.472906-08:00 Completed: detail Archive replaced by filled red Primer Reject with white X; Requests table removes Priority column/filter/bulk priority and adds compact accessible approve/reject Decision controls; status saves update rows immediately; shared approval helper preserves AI/link workflow and failures. Archive/restore remains in bulk actions. 48 frontend tests pass, production build and final typecheck pass, browser visuals verified including white X. Live AI remains unconfigured. No merge/push.
+
+2026-11-15T10:54:56.101776-08:00 User requests removing Requests view toggles, read-only detail status, then discussion of auto-linking requirements. Removing request view switching and status menu; inspecting existing approval workflow without expanding it.
+
+2026-11-15T10:55:34.377849-08:00 Removed Requests board/list/table switch and rendering branches, retained actual Tablecn table; replaced detail status menu with read-only status. Browser verified both views, production build passed. Inspected auto-link path: shared approval helper calls saved/new AI triage then transactional confirm; local AI configuration remains blocker; browser-orchestrated approval and cross-request duplicate creation are follow-up hardening items for discussion only.
+
+2026-11-15T11:52:03.360767-08:00 User authorizes server-side auto-link approval, preservation of manual links, duplicate protection, review branch only. Implementing durable approval jobs and tests.
+
+2026-11-15T11:57:30.992804-08:00 Completed server-managed approval queue (migration 18), browser-independent auto-linking, manual-link precedence, canonical opportunity duplicate checks and serialized workspace approval processing. Rejection/archive cancels pending approval; failed jobs can retry. Applied local migration and restarted development backend. 44 targeted PostgreSQL tests and 48 frontend tests passed; production build and targeted lint passed. Browser verified Approve and manual linking controls available. Remains on feature/opportunities-review, unmerged and unpushed. Live AI provider run remains unverified because local AI credentials/config are absent.
+
+2026-11-15T12:28:02.733392-08:00 User asks to restore saved AI credentials and test server approval end to end on review branch. Checking configuration without exposing secrets.
+
+2026-11-15T12:29:54.781444-08:00 Found existing key and triage settings in ignored backend/.env.local; previous direct Uvicorn launch omitted them. Added scripts/dev-backend.sh to explicitly load the local file and documented it. Restarted backend with saved credentials. Live authenticated HTTP approval tests in Beta passed: new opportunity created/linked, second similar request reused same opportunity, repeated approval POST reused job, manual link preserved without AI call. All three labeled test requests and the test opportunity archived via API. Reported AI cost $0.001940. Branch remains feature/opportunities-review; no merge/push.
+
+2026-11-15T12:31:29.199739-08:00 User requests removing the “1 original request” label from linked evidence. Removed only the count label from opportunity detail; retained linked request cards and data on feature/opportunities-review.
+
+2026-11-15T12:32:11.507920-08:00 User asks to remove the bigger duplicate heading. Removed the uppercase Linked evidence heading, retaining the section label and request cards on feature/opportunities-review.
+
+2026-11-15T12:38:29.876927-08:00 User asks to remove Created by, move the AI priority action into the Priority sidebar section, enable manual status and priority selection on opportunity detail and table, and default to Table. Implemented on feature/opportunities-review using existing authenticated decision and priority endpoints, preserving effort and dependencies, AI review, decision notes, and Board/List views. Updated existing UI checks.
+
+2026-11-15T12:41:54.859220-08:00 User asks to incorporate saved triage analysis into the opportunity description without a separate AI Analysis heading and make the description editable in Markdown like comments. Implementing shared editor and workspace-scoped saves on feature/opportunities-review.
+
+2026-11-15T12:43:53.008470-08:00 Completed integrated Markdown opportunity descriptions, reusing the comment Write/Preview editor. Description updates persist with workspace permissions and stale-write checks. Applied local migration 19 and restarted backend; 25 targeted PostgreSQL tests, 48 frontend tests, and production build passed. Review branch remains unmerged.
+
+2026-11-15T12:50:25.114935-08:00 User asks for a readable description author such as Copilot, priority review in a popup side panel, and the same comments as Requests instead of a decision-note form. Implementing on feature/opportunities-review.
+
+2026-11-15T12:52:33.270522-08:00 Added Copilot attribution for generated opportunity descriptions and readable fallbacks, a right-hand Priority review sheet, and the shared Requests discussion component backed by workspace-scoped opportunity comments. Kept historical decisions and notes. Frontend and targeted PostgreSQL suites and build passed; migration 20 applied, backend restarted, and the live local comments endpoint returned 200. Changes remain on feature/opportunities-review.
+
+2026-11-15T13:00:16.515326-08:00 User asks to remove one repeated divider above the opportunity comment editor and remove the Not Found message and the content below it. Removed the redundant wrapper divider and Decision history UI, kept status saves and stored history, and moved meaningful comment errors into the discussion.
+
+2026-11-15T13:05:08.731845-08:00 User asks to review the request-to-opportunity pipeline and recommend whether to add basic tasks and per-opportunity Kanban. Verified approval-triggered linking and optional priority assessments. Recommended single-level delivery tasks beginning at Planned and deferring per-opportunity Kanban until usage warrants it; no product changes.
+
+2026-11-15T13:10:05.203783-08:00 User wants to plan before implementing task lanes, a GitHub-style sub-issue section, a workspace Tasks page, and task details. Checked public Primer components and existing Tablecn, Kanban 2, and issue detail components. Discussed a single task record per opportunity and shared Board/Table views. No implementation started.
+
+2026-11-15T13:20:45.394888-08:00 User authorizes Tasks implementation on review branch with Primer child task list, Tablecn and Kanban 2, and Backlog and Blocked lanes. Earlier project changes are untracked and main and review point at the same commit, so there is no separate earlier commit to merge.
+
+2026-11-15T13:27:58.177571-08:00 Completed opportunity task lists with Primer, workspace Tasks Tablecn/Primer List/Kanban 2 views, Backlog/To do/In progress/Blocked/Done lanes, and task detail with assignment, Markdown, and discussion. Applied local schema 21 and restarted backend. Production build, 48 frontend tests, and 40 targeted PostgreSQL tests passed. Chrome verified adding a task from an opportunity and moving it into Blocked, confirmed through Table, task detail and PostgreSQL. Removed temporary Beta fixtures and left Alpha Tasks open. Work remains in the review checkout. No earlier commit exists to merge into main.
+
+2026-11-15T13:32:19.938764-08:00 User asks for GitHub-style split Create sub-issue button in the description footer, removal of the standalone Opportunities Archived button, and discussion only of AI task drafting. Reused Primer controls and existing task creation, moved archived access to Status while preserving restore, and scoped AI to a proposal.
+
+2026-11-15T13:40:46.677546-08:00 User approved adding Draft sub-issues with AI to the opportunity dropdown. Building editable, selectable drafts and a single atomic create action that places the selected tasks in Backlog.
+
+2026-11-15T13:43:58.619541-08:00 Shipped the local review implementation for AI sub-issue drafting with up to eight suggestions, clarification notes, editable selection, and atomic Backlog creation. Live browser verified four drafts, one edited title, one deselection, and exactly three unassigned Backlog tasks in PostgreSQL. Removed the synthetic fixture and opened the new menu in Alpha. Frontend build and 48 frontend and 30 targeted PostgreSQL tests passed.
+
+2026-11-15T13:48:10.842474-08:00 User requests assessment readiness review and ideas for the sidebar agent. Compared current workflow and assistant tools to the documented product pipeline, prompt log, and seeded planning backlog. Identified decision communication, clarification responses, outcome tracking, and submission packaging gaps. Original external challenge rubric was not located. Recommended read-only task and delivery context and a draft decision brief. No product changes.
+
+2026-11-15T13:50:02.964481-08:00 User supplies the Technical AI Assessment brief and asks to align requirements before addressing submitter updates, clarification, and outcome tracking. Mapped the four core requirements to the current app, defined a minimal in-app feedback loop, and identified public GitHub and Slate submission work. Verified CLAUDE.md and the prompt log are present and noted the limits of verifying first-prompt order from the log. No product implementation or publishing.
+2026-11-15T21:57:14Z Requested in-app updates with AI drafting and reviewer approval, clarification replies, and a shipped-outcome check on the review branch. Built the Updates page, explicit reviewer publish, submitter replies that reopen review, and a shipped outcome check. Applied the local migration and verified AI drafting on synthetic feedback.
+2026-11-15T23:00:44Z Requested review examples. Seeded a published update, an open clarification addressed to the signed-in demo account, and a shipped opportunity with a measured outcome in local Beta.
+2026-11-15T23:10:00Z Requested a single workspace with all features retained. Consolidated Beta into Product Feedback, verified the moved examples and their links, and updated demo provisioning to create one workspace.
+
+2026-11-15T23:42:38.605190+00:00 User approved conversation-centered updates, requested component reuse and a feature branch. Created feature/request-conversations; reusing existing Primer discussion, Markdown editor, shadcn cards/dialogs and buttons.
+
+2026-11-15T23:45:42.626085+00:00 Completed conversation-centered Updates on feature/request-conversations: reused IssueComment, IssueMarkdownEditor, Card, Dialog, Button and Primer Select/Textarea; inbox links into request conversations; reviewer-only request notes enforced server-side; decision publishing shows linked request recipients; outcome remains on shipped opportunities. Build/typecheck, 48 frontend tests, 4 PostgreSQL-backed update/comment tests and Ruff passed. Verified seeded inbox, clarification reply editor, shipped outcome and recipient preview in browser. Restarted local API. Changes remain uncommitted and unmerged.
+
+2026-11-16T00:34:11.247905+00:00 User reported detail-page scrolling moving the shell and exposing blank space. Reproduced document scrollY=312 alongside the detail scroller. Constrained document overflow only while the signed-in shell is mounted; retained existing components and panel scrolling on feature/request-conversations.
+
+2026-11-16T00:41:28.322041+00:00 User requested notification-to-comment flow under a name other than Inbox. Implementing Notifications, anchored request comments and replies using existing components on feature/request-conversations.
+
+2026-11-16T00:44:30.700183+00:00 Completed Notifications rename, comment deep links and highlight, published-update replies using IssueComment/IssueMarkdownEditor, opportunity source links, and team conversation activity ordering. Kept existing publication idempotency and private internal notes. Added migration 0023 and applied locally. Four PostgreSQL tests and 48 frontend tests passed; frontend build passed; browser verified notification scrolls to comment with reply editor. No merge.
+
+2026-11-16T00:46:43.932340+00:00 User requested reverting the last Notifications changes. Restored Updates labels, prior feed and clarification-only replies; removed deep links/highlight/general replies and their test. Verified new reply table was empty before rolling back migration 0023; restored schema version 22 and restarted local API. Earlier conversation changes and scroll fix preserved. Typecheck passed.
+
+2026-11-15T17:20:02.425607-08:00 User requested one comments section, neutral published comments, Draft sparkle button beside editor tabs, removal of internal wording, and scroll regression fix. Implementing with existing components.
+
+2026-11-15T17:26:48.709768-08:00 User requested Tablecn Updates inbox, unread sidebar badge, notifications for submitters and supporters. Implementing persistent per-user read state and reuse of registered table components on review branch.
+
+2026-11-16T01:35:13.676337+00:00 User reports recurring clipped header/scroll bug. Reproduced notification navigation scrolling app shell 22px; fixing scroll ownership and heading focus, adding regression coverage.
+
+2026-11-16T01:38:07.455149+00:00 Rename sidebar Updates to Notifications and fix task detail scrolling. Added a bounded task content scroll pane; kept fixed shell and existing components.
+
+2026-11-16T01:40:04.060484+00:00 Tighten Notifications table spacing between Status and Message; configure existing Tablecn column sizes and expand message preview.
+
+2026-11-15T17:43:25.994103-08:00 | User: Make Tasks filters and all table styling consistent with Requests and Opportunities. Response: Replace separate task filters with shared Tablecn toolbar and reuse dropdown components for inline status.
+
+2026-11-16T01:49:18.711862+00:00 User requested consistent bulk actions, sorting/filtering, notification clearing and task bulk actions. Implementing shared selection controls, bulk task status, and persistent notification read/archive management.
+
+2026-11-16T01:55:43.246322+00:00 — Completed table bulk controls: notification read/unread/archive/restore and archive-all-filtered, active/archive filtering, shared selection and sorting controls, and task bulk status changes. Typecheck and five backend notification tests passed. Browser verified notification archive/restore and task bulk Blocked/Backlog saves; original task statuses restored. Kept on review branch.
+
+2026-11-16T02:22:12.888579+00:00 — User requested GCP discovery and deployment preparation for an interviewer-accessible authenticated app. Inspecting existing GCP configuration, hosting runbooks, application auth, and deployment prerequisites.
+
+2026-11-16T02:24:23.981082+00:00 — GCP discovery: secondary existing login successfully lists projects and two open billing accounts; active business login requires reauthentication. Prepared Cloud Build configuration, source-upload exclusions, AI-enabled Docker dependency default and interview deployment/auth runbook on existing review branch. Billing choice requested before cloud resource creation; no resources deployed.
+
+2026-11-16T02:30:48.757527+00:00 — User authorized My Billing Account 1 for GCP deployment. Starting dedicated project provisioning and authenticated app deployment on review branch.
+
+2026-11-16T02:43:04.211529+00:00 | Deployment outcome: linked authorized My Billing Account 1, deployed dedicated GCP project with Cloud Run, Cloud SQL, secrets, local auth and individual demo accounts. Verified live AI approval, support, submitter update notification/read, and browser login. Added private credentials and deployment record; review branch remains unmerged. $75 budget alerts configured, not a spending cap.
+
+2026-11-16T04:36:49.656321+00:00 | User asks to identify raw submitter UUID, rename browser tab Feature Intelligence, and verify sidebar/draft AI provider. Inspecting live identity and AI routes; fixing display labels and branding on review branch.
+
+2026-11-16T04:47:41.561171+00:00 | Identified sample submitter UUID as submitter@example.com; replaced raw author ID with readable name and renamed tab/login Feature Intelligence. Verified live sidebar and unpublished AI draft via Anthropic configured claude-haiku-5-5. Corrected response schema after smoke failure, temporarily restored prior revision, then deployed revision 00003-ljr and verified hosted title and feedback display name. Frontend build and response-model check passed; DB-dependent pytest unavailable without test database settings. Review branch retained.
+
+2026-11-17T00:16:11.383888+00:00 | User asks about clearing requests, deletion/archive and accept/reject notifications; reports signed-in shell with Please sign in error. Investigating and fixing expired-session handling; asking archive scope before touching records.
+
+2026-11-17T00:18:29.436327+00:00 | User confirmed: Archive all existing hosted requests. Archived all 3 existing hosted requests recoverably; preserved opportunities. Session-expiration fix tested; deployment in progress.
+
+2026-11-17T00:22:39.407240+00:00 | Completion: archived all 3 hosted requests recoverably; deployed session-expiration fix as revision 00004-hng, verified hosted asset and API. Approval/rejection currently does not automatically notify; published comments/updates do. No merge performed.
+
+2026-11-17T00:24:46.530686+00:00 | User asked for in-app approval and rejection notifications, a fresh hosted workflow test, and a clean opportunity slate. Implementing notifications and using recoverable archive.
+
+2026-11-17T00:36:43.293773+00:00 | Archived the existing hosted opportunity. Deployed transactional submitter decision notifications, passed the backend suite, and verified fresh live AI approval and rejection. Archived intermediate diagnostic records and kept the two final test requests and one new linked opportunity.
+
+2026-11-17T00:42:55.786888+00:00 | User requested simpler Notifications and Appearance, hidden AI triage controls with hosted automation enabled, and permanent deletion of hosted demo content while retaining access.
+
+2026-11-17T00:49:30.494303+00:00 | User requested a Markdown QA checklist, thank-you notifications for new submissions, an empty Opportunities table, and Git cleanup and GitHub publication for the app.
+
+2026-11-17T00:50:52.846571+00:00 | User asked what the Kibo board is. Explained that the app already uses the MIT-licensed drag-and-drop primitives beneath the premium Kanban layout and that a separate public layout was proposed.
+
+2026-11-17T00:51:26.624055+00:00 | User approved continuing with the existing Kibo UI primitives for the public source.

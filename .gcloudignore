@@ -1,0 +1,19 @@
+# Keep build uploads free of local credentials, databases and dependencies.
+.gcloudignore
+.git
+.git/**
+**/node_modules/**
+**/dist/**
+**/.venv/**
+**/__pycache__/**
+**/.pytest_cache/**
+**/.ruff_cache/**
+**/data/**
+**/*.sqlite3*
+.env*
+**/.env*
+.firebaserc
+firebase-debug*.log
+.local/**
+**/*.pem
+**/*service-account*.json

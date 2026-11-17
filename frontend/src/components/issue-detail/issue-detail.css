@@ -1,0 +1,308 @@
+.github-detail {
+  color: var(--fgColor-default);
+  background: var(--bgColor-default);
+  padding: 24px 32px 48px;
+  min-width: 0;
+  font-size: 14px;
+}
+.github-detail .issue-breadcrumb-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+.github-detail .issue-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.github-detail .issue-title {
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+  margin: 0 0 14px;
+}
+.github-detail .issue-title:focus {
+  outline: none;
+}
+.github-detail .issue-number {
+  color: var(--fgColor-muted);
+  font-weight: 300;
+  white-space: nowrap;
+}
+.github-detail .issue-subtitle {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  color: var(--fgColor-muted);
+  padding-bottom: 24px;
+}
+.github-detail .issue-discussion {
+  min-width: 0;
+}
+.github-detail .issue-comment {
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.github-detail .issue-comment > header {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--borderColor-default);
+  background: var(--bgColor-muted);
+  color: var(--fgColor-muted);
+}
+.github-detail .issue-comment > header strong {
+  color: var(--fgColor-default);
+  overflow-wrap: anywhere;
+}
+.github-detail .issue-comment-body {
+  padding: 20px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.github-detail .issue-property {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--borderColor-muted);
+  overflow-wrap: anywhere;
+  font-size: 12px;
+}
+.github-detail .issue-property:first-child {
+  padding-top: 0;
+}
+.github-detail .issue-property h2 {
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0 0 10px;
+}
+.github-detail .issue-properties a {
+  color: var(--fgColor-accent);
+}
+.github-detail .issue-review {
+  margin: 24px 0;
+  border-top: 1px solid var(--borderColor-default);
+  padding-top: 24px;
+}
+.github-detail .issue-review > h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.github-detail .issue-notice {
+  margin: 16px 0;
+}
+@media (max-width: 767px) {
+  .github-detail {
+    padding: 16px;
+  }
+  .github-detail .issue-title {
+    font-size: 24px;
+  }
+}
+/* PageLayout uses --spacing internally; reset it at our content boundaries so
+   embedded Tailwind controls retain their normal spacing scale. */
+.github-detail .issue-discussion,
+.github-detail .issue-properties {
+  --spacing: 0.25rem;
+}
+.github-detail .issue-breadcrumb-row > nav {
+  width: auto;
+  flex: 1;
+}
+/* GitHub issue composition: title, authored description, activity, properties. */
+.github-detail {
+  max-width: 1376px;
+  margin: 0 auto;
+  padding: 28px 40px 56px;
+}
+.github-detail .issue-title {
+  font-size: 32px;
+  line-height: 1.25;
+}
+.github-detail .issue-subtitle {
+  padding-bottom: 8px;
+}
+.github-detail .issue-comment {
+  border-color: var(--borderColor-accent-muted);
+}
+.github-detail .issue-comment > header {
+  background: var(--bgColor-accent-muted);
+  border-color: var(--borderColor-accent-muted);
+  align-items: center;
+  padding: 10px 16px;
+}
+.github-detail .issue-author-avatar {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--bgColor-muted);
+  border: 1px solid var(--borderColor-default);
+  color: var(--fgColor-muted);
+  margin-right: 2px;
+}
+.github-detail .issue-comment-body {
+  padding: 20px 24px 24px;
+  font-size: 16px;
+}
+.github-detail .issue-comment-body .analysis-markdown {
+  font-size: 16px;
+  line-height: 1.6;
+}
+.github-detail .issue-property {
+  font-size: 14px;
+  padding: 20px 0;
+}
+.github-detail .issue-property h2 {
+  color: var(--fgColor-muted);
+  font-size: 14px;
+}
+.github-detail .issue-review-card {
+  padding: 0;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.github-detail .issue-review-card > h2 {
+  background: var(--bgColor-muted);
+  border-bottom: 1px solid var(--borderColor-default);
+  padding: 12px 16px;
+  font-size: 14px;
+  margin: 0;
+}
+.github-detail .issue-review-body {
+  padding: 20px 24px;
+}
+.github-detail .issue-review-body > section {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.github-detail .issue-property-help,
+.github-detail .issue-property-muted {
+  color: var(--fgColor-muted, #656d76);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+.github-detail .issue-property-help {
+  margin: 0.35rem 0 0;
+}
+@media (max-width: 767px) {
+  .github-detail {
+    padding: 16px;
+  }
+  .github-detail .issue-title {
+    font-size: 24px;
+  }
+  .github-detail .issue-comment-body,
+  .github-detail .issue-review-body {
+    padding: 16px;
+  }
+}
+
+.issue-comment-editor {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--borderColor-default);
+}
+.issue-comment-editor h2 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.issue-comment-editor nav {
+  margin-bottom: 12px;
+}
+.issue-comment-preview {
+  min-height: 150px;
+  padding: 16px;
+}
+.issue-comment-submit {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+.issue-opportunity-link {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-weight: 600;
+}
+
+/* Match the medium Primer pane (296px) and normal column gap (24px). */
+.github-detail .issue-heading-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-right: 320px;
+}
+.github-detail .issue-heading-copy {
+  min-width: 0;
+}
+.github-detail .issue-primary-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding-bottom: 24px;
+}
+@media (max-width: 1100px) {
+  .github-detail .issue-heading-row {
+    margin-right: 0;
+    flex-wrap: wrap;
+    gap: 0 24px;
+  }
+}
+
+.github-detail .issue-heading-row {
+  display: block;
+}
+.github-detail .issue-heading-row .issue-subtitle {
+  width: 100%;
+}
+.github-detail .issue-heading-row .issue-heading-copy {
+  width: 100%;
+}
+.github-detail .issue-primary-actions {
+  margin-left: auto;
+  padding-bottom: 0;
+}
+.issue-opportunity-link {
+  margin-top: 12px;
+}
+.issue-opportunity-suggestion {
+  margin-top: 12px;
+}
+.opportunity-picker-footer {
+  padding: 8px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Primer danger button, filled to match the primary approval action. */
+.github-detail .request-reject-button {
+  color: #fff;
+  background-color: var(--bgColor-danger-emphasis, #cf222e);
+  border-color: var(--borderColor-danger-emphasis, #a40e26);
+}
+.github-detail .request-reject-button:hover:not(:disabled) { background-color: #a40e26; color: #fff; }
+.github-detail .request-reject-button [data-component="leadingVisual"],
+.github-detail .request-reject-button svg { color: #fff; }
+
+.github-detail .issue-comment-neutral { border-color: var(--borderColor-default, #d1d9e0); }
+.github-detail .issue-comment-neutral > header { background: var(--bgColor-muted, #f6f8fa); border-color: var(--borderColor-default, #d1d9e0); }
+.issue-editor-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.issue-editor-toolbar > nav { flex: 1; min-width: 0; }

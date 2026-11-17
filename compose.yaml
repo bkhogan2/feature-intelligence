@@ -1,0 +1,21 @@
+name: workspace-starter
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: starter_owner
+      POSTGRES_PASSWORD: starter-local-only
+      POSTGRES_DB: starter
+      APP_DATABASE_PASSWORD: starter-local-api-only
+    ports:
+      - "127.0.0.1:${STARTER_DB_PORT:-55439}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./deploy/local/init-db.sh:/docker-entrypoint-initdb.d/001-runtime-role.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U starter_owner -d starter"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+volumes:
+  postgres-data:

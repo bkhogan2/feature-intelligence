@@ -1,0 +1,384 @@
+/* The signed-in shell owns scrolling through its existing panel containers.
+   Keep document overflow (including portaled accessibility helpers) from
+   creating a second scroll surface outside the viewport-sized shell. */
+html:has(.app-shell),
+body:has(.app-shell) {
+  overflow: clip;
+  overscroll-behavior: none;
+}
+.composable-page-scroll {
+  overscroll-behavior-y: contain;
+}
+
+:root {
+  --shell-left-edge-shadow:
+    -3px 0 10px -6px rgb(15 23 42 / 0.22),
+    0 -3px 10px -6px rgb(15 23 42 / 0.024), 0 3px 10px -6px rgb(15 23 42 / 0.16);
+  --shell-right-edge-shadow:
+    3px 0 10px -6px rgb(15 23 42 / 0.22),
+    0 -3px 10px -6px rgb(15 23 42 / 0.024), 0 3px 10px -6px rgb(15 23 42 / 0.16);
+  --shell-top-edge: inset 0 1px 0 rgb(15 23 42 / 0.08);
+}
+.app-shell {
+  position: fixed;
+  inset: 0;
+  --workspace-frame-gap: var(--shell-frame-gap-desktop);
+}
+[data-sidebar="sidebar"][data-mobile="true"] {
+  --workspace-frame-gap: var(--shell-frame-gap-mobile);
+}
+.shell-panel--left {
+  margin-bottom: var(--shell-left-panel-gap);
+  border-right: 1px solid var(--navigation-sidebar-divider);
+  border-radius: var(--shell-left-radius) 0 0 var(--shell-left-radius);
+  box-shadow: var(--shell-left-panel-shadow);
+  clip-path: inset(
+    -1.25rem 0 -1.25rem -1.25rem round var(--shell-left-radius) 0 0
+      var(--shell-left-radius)
+  );
+}
+.shell-panel--right {
+  margin-bottom: var(--shell-right-panel-gap);
+  border-left: 1px solid var(--navigation-sidebar-divider);
+  border-radius: 0 var(--shell-right-radius) var(--shell-right-radius) 0;
+  box-shadow: var(--shell-right-panel-shadow);
+  clip-path: inset(
+    -1.25rem -1.25rem -1.25rem 0 round 0 var(--shell-right-radius)
+      var(--shell-right-radius) 0
+  );
+}
+.shell-content {
+  margin: 0 var(--shell-content-inline-end-gap) var(--shell-content-gap) 0;
+  border-radius: var(--shell-content-left-radius)
+    var(--shell-content-right-radius) var(--shell-content-right-radius)
+    var(--shell-content-left-radius);
+  box-shadow: var(--shell-content-shadow);
+}
+.shell-header-navigation {
+  left: calc(var(--sidebar-width-icon) + 0.75rem);
+}
+.shell-left-toggle {
+  position: absolute;
+  top: 0;
+  left: calc(
+    var(--shell-header-toggle-offset) - var(--sidebar-width-icon) - 0.75rem
+  );
+}
+.right-sidebar-toggle {
+  top: calc(var(--app-header-height) / 2 - 1rem);
+  right: var(--shell-right-toggle-offset);
+}
+@media (max-width: 767px) {
+  .app-shell {
+    --workspace-frame-gap: var(--shell-frame-gap-mobile);
+  }
+  .shell-header-navigation {
+    left: 0.5rem;
+  }
+  .shell-left-toggle {
+    position: static;
+  }
+  .right-sidebar-toggle {
+    right: 5rem;
+  }
+  .shell-content {
+    margin-inline: var(--workspace-frame-gap);
+    border-radius: var(--shell-left-radius)
+      var(--shell-content-mobile-right-radius)
+      var(--shell-content-mobile-right-radius) var(--shell-left-radius);
+  }
+}
+
+/* In Left inset the frame owns its right edge, including the right panel, without a right activity rail.
+   Keep the same DOM tree in both modes so layout switches retain sidebar state. */
+.shell-workspace-frame {
+  display: contents;
+}
+.app-shell[data-workspace-frame="shared"] .shell-workspace-frame {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  margin: 0 var(--shell-frame-gap) var(--shell-frame-gap) 0;
+  border-radius: var(--shell-frame-left-radius) var(--shell-frame-right-radius)
+    var(--shell-frame-right-radius) var(--shell-frame-left-radius);
+  background: var(--content-surface);
+  box-shadow: var(--shell-frame-shadow);
+  overflow: hidden;
+}
+@media (max-width: 767px) {
+  .app-shell[data-workspace-frame="shared"] .shell-workspace-frame {
+    margin-left: var(--shell-frame-gap);
+    border-radius: var(--shell-left-radius) var(--shell-frame-right-radius)
+      var(--shell-frame-right-radius) var(--shell-left-radius);
+  }
+  .app-shell[data-workspace-frame="shared"] .shell-content {
+    margin: 0;
+    border-radius: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .app-shell[data-workspace-frame="shared"] .shell-workspace-frame {
+    margin-right: var(--shell-frame-gap);
+  }
+  .shell-contained-right-sidebar {
+    width: calc(var(--sidebar-width) - var(--sidebar-width-icon));
+  }
+  [data-state="collapsed"] > .shell-contained-right-sidebar {
+    width: 0;
+  }
+}
+
+/* Quiet, narrow scrollbars without the native track gutter or edge lines. */
+.app-shell {
+  --shell-scrollbar-thumb: rgb(0 0 0 / 0.24);
+  --shell-scrollbar-thumb-hover: rgb(0 0 0 / 0.36);
+}
+.dark .app-shell {
+  --shell-scrollbar-thumb: rgb(255 255 255 / 0.28);
+  --shell-scrollbar-thumb-hover: rgb(255 255 255 / 0.42);
+}
+.app-shell * {
+  scrollbar-width: thin;
+  scrollbar-color: var(--shell-scrollbar-thumb) transparent;
+}
+@supports selector(::-webkit-scrollbar) {
+  .app-shell * {
+    scrollbar-width: auto;
+    scrollbar-color: auto;
+  }
+  .app-shell *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .app-shell *::-webkit-scrollbar-track,
+  .app-shell *::-webkit-scrollbar-corner {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+  .app-shell *::-webkit-scrollbar-thumb {
+    background: var(--shell-scrollbar-thumb);
+    background-clip: padding-box;
+    border: 1px solid transparent;
+    border-radius: 999px;
+  }
+  .app-shell *::-webkit-scrollbar-thumb:hover {
+    background-color: var(--shell-scrollbar-thumb-hover);
+  }
+  .app-shell *::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}
+
+/* Composable shell: header placement never changes the mounted workspace panels. */
+.composable-shell {
+  background: var(--content-surface);
+}
+.composable-shell-body {
+  overflow: hidden;
+}
+.composable-shell [data-slot="sidebar"] {
+  min-height: 0;
+}
+.composable-shell-body > .group {
+  height: 100%;
+}
+.composable-shell-body .group[data-state="collapsed"] > div:last-child {
+  width: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+.composable-shell .shell-panel {
+  margin: 0;
+  clip-path: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+.composable-shell[data-layout="no-inset"] .composable-shell-body {
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.composable-shell[data-layout="left-inset"],
+.composable-shell[data-layout="dual-inset"] {
+  background: var(--shell-backdrop);
+}
+.composable-shell[data-layout="left-inset"] .composable-shell-body,
+.composable-shell[data-layout="dual-inset"] .composable-shell-body {
+  margin: 0;
+  gap: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.composable-shell[data-layout="left-inset"] .composable-center,
+.composable-shell[data-layout="dual-inset"] .composable-center {
+  margin: 8px 8px 8px 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.composable-shell .navigation-sidebar {
+  background: var(--shell-backdrop);
+}
+.composable-shell .navigation-sidebar [data-sidebar="header"] {
+  padding: 8px;
+}
+.composable-shell
+  .navigation-sidebar
+  [data-sidebar="menu-button"][data-size="lg"] {
+  height: 48px;
+}
+
+/* The classic header's controls depend on fixed configuration, never dragged width. */
+.composable-shell[data-header-style="centered"] .composable-shell-header {
+  background: var(--shell-backdrop);
+  color: var(--shell-backdrop-foreground);
+  border-bottom-color: transparent;
+}
+.classic-header-navigation {
+  position: absolute;
+  left: var(--classic-nav-left);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 0.25rem;
+}
+.classic-left-toggle {
+  position: absolute;
+  top: 0;
+  left: calc(var(--classic-toggle-left) - var(--classic-nav-left));
+}
+.classic-header-brand {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 35%;
+}
+.classic-header-help {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.composable-shell[data-header-style="centered"] .composable-header-toggle-host {
+  position: absolute;
+  right: var(--classic-toggle-right);
+  top: 50%;
+  transform: translateY(-50%);
+}
+@media (max-width: 767px) {
+  .classic-header-navigation {
+    left: 0.5rem;
+  }
+  .classic-history-button {
+    display: none;
+  }
+  .classic-left-toggle {
+    position: static;
+  }
+  .composable-shell[data-header-style="centered"]
+    .composable-header-toggle-host {
+    right: 3.25rem;
+  }
+}
+
+/* Page headers use local coordinates, rather than rail offsets from the site header. */
+.composable-shell[data-header-style="centered"]
+  .composable-center
+  .classic-header-navigation {
+  position: static;
+  transform: none;
+}
+.composable-shell[data-header-style="centered"]
+  .composable-center
+  .classic-left-toggle {
+  position: static;
+}
+.composable-shell[data-header-style="centered"]
+  .composable-center
+  .classic-header-help {
+  right: 0.75rem;
+}
+.composable-shell[data-header-style="centered"]
+  .composable-center
+  .composable-header-toggle-host {
+  right: 3.25rem;
+}
+.composable-shell-header {
+  isolation: isolate;
+}
+.classic-header-brand {
+  max-width: 42%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-shell *,
+  .app-shell *::before,
+  .app-shell *::after {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
+  }
+}
+
+/* A single, permanent navigation column. Its edge is also the resize target. */
+.composable-shell .workspace-sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  background: var(--shell-backdrop);
+}
+.composable-shell .navigation-sidebar {
+  border-right: 0;
+}
+.composable-shell[data-layout="no-inset"] .workspace-sidebar {
+  border-right: 1px solid var(--border);
+}
+.composable-shell .navigation-sidebar [data-sidebar="header"] {
+  padding: 8px 10px 12px;
+}
+.composable-shell .navigation-sidebar [data-sidebar="footer"] {
+  padding: 8px 10px;
+}
+.composable-shell .navigation-sidebar [data-sidebar="menu-button"] {
+  font-size: 13px;
+  height: 32px;
+  gap: 9px;
+}
+.composable-shell
+  .navigation-sidebar
+  [data-sidebar="menu-button"][data-size="lg"] {
+  height: 36px;
+}
+.composable-shell .navigation-sidebar [data-sidebar="menu-button"] > svg {
+  width: 15px;
+  height: 15px;
+  color: var(--muted-foreground);
+}
+.composable-shell .navigation-sidebar [data-sidebar="group"] {
+  padding: 4px 10px;
+}
+.composable-shell .navigation-sidebar [data-sidebar="menu"] {
+  gap: 2px;
+}
+/* Keep a usable page at narrow widths; horizontal scrolling preserves navigation. */
+@media (max-width: 767px) {
+  .composable-shell .composable-shell-body {
+    overflow-x: auto;
+  }
+  .composable-shell .composable-center {
+    min-width: 480px;
+    flex-shrink: 0;
+  }
+}
+
+/* Frame containers must never become programmatic scroll targets. Hidden
+   overflow still scrolls on focus/scrollIntoView; clip does not. Actual page
+   and sidebar scroll panes retain their own overflow-auto behavior. */
+.app-shell.composable-shell,
+.composable-shell .composable-shell-body,
+.composable-shell .composable-center {
+  overflow: clip;
+}

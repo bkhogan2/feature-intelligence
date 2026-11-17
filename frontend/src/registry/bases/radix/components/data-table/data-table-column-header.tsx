@@ -1,0 +1,202 @@
+"use client";
+
+import {
+  type Column,
+  type RowData,
+  type SortDirection,
+  type SortingState,
+  Subscribe,
+} from "@tanstack/react-table";
+import { cn } from "@/lib/utils";
+import * as React from "react";
+
+import type { DataTableFeatures } from "@/lib/data-table-features";
+
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/registry/bases/radix/ui/dropdown-menu";
+import { IconPlaceholder } from "@/registry/icons/icon-placeholder";
+
+interface DataTableColumnHeaderProps<
+  TData extends RowData,
+  TValue,
+> extends React.ComponentProps<typeof DropdownMenuTrigger> {
+  column: Column<DataTableFeatures, TData, TValue>;
+  label?: string;
+}
+
+export function DataTableColumnHeader<TData extends RowData, TValue>({
+  column,
+  label = column.columnDef.meta?.label ?? column.id,
+  className,
+  ...props
+}: DataTableColumnHeaderProps<TData, TValue>) {
+  if (!column.getCanSort() && !column.getCanHide()) {
+    return (
+      <div title={label} className={cn("truncate", className)}>
+        {label}
+      </div>
+    );
+  }
+
+  return (
+    <Subscribe
+      source={column.table.store}
+      selector={(state) => ({
+        isVisible: state.columnVisibility[column.id] !== false,
+        sortDirection: getSortDirection(state.sorting, column.id),
+      })}
+    >
+      {(headerState) => (
+        <DataTableColumnHeaderMenu
+          column={column}
+          label={label}
+          className={className}
+          isVisible={headerState.isVisible}
+          sortDirection={headerState.sortDirection}
+          {...props}
+        />
+      )}
+    </Subscribe>
+  );
+}
+
+interface DataTableColumnHeaderMenuProps<
+  TData extends RowData,
+  TValue,
+> extends DataTableColumnHeaderProps<TData, TValue> {
+  label: string;
+  isVisible: boolean;
+  sortDirection: SortDirection | "none";
+}
+
+function DataTableColumnHeaderMenu<TData extends RowData, TValue>({
+  column,
+  label,
+  className,
+  isVisible,
+  sortDirection,
+  ...props
+}: DataTableColumnHeaderMenuProps<TData, TValue>) {
+  function onSortDirectionChange(direction: SortDirection) {
+    if (sortDirection === direction) {
+      column.clearSorting();
+      return;
+    }
+
+    column.table.setSorting((prev) => {
+      const sort = { id: column.id, desc: direction === "desc" };
+      if (!column.getCanMultiSort()) return [sort];
+      return [sort, ...prev.filter((item) => item.id !== column.id)].slice(
+        0,
+        column.table.options.maxMultiSortColCount,
+      );
+    });
+  }
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        className={cn(
+          "-ms-1.5 flex h-8 max-w-full min-w-0 items-center gap-1.5 rounded-md px-2 py-1.5 hover:bg-accent focus:ring-1 focus:ring-ring focus:outline-none data-[state=open]:bg-accent rtl:flex-row-reverse [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground",
+          className,
+        )}
+        title={label}
+        {...props}
+      >
+        <bdi className="truncate">{label}</bdi>
+        {column.getCanSort() &&
+          (sortDirection === "desc" ? (
+            <IconPlaceholder
+              lucide="ChevronDown"
+              tabler="IconChevronDown"
+              hugeicons="ArrowDown01Icon"
+              phosphor="CaretDownIcon"
+              remixicon="RiArrowDownSLine"
+            />
+          ) : sortDirection === "asc" ? (
+            <IconPlaceholder
+              lucide="ChevronUp"
+              tabler="IconChevronUp"
+              hugeicons="ArrowUp01Icon"
+              phosphor="CaretUpIcon"
+              remixicon="RiArrowUpSLine"
+            />
+          ) : (
+            <IconPlaceholder
+              lucide="ChevronsUpDown"
+              tabler="IconSelector"
+              hugeicons="UnfoldMoreIcon"
+              phosphor="CaretUpDownIcon"
+              remixicon="RiArrowUpDownLine"
+            />
+          ))}
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        align="start"
+        className="w-28 data-closed:fill-mode-forwards"
+      >
+        {column.getCanSort() && (
+          <>
+            <DropdownMenuCheckboxItem
+              className="[&_svg]:text-muted-foreground"
+              checked={sortDirection === "asc"}
+              onClick={() => onSortDirectionChange("asc")}
+            >
+              <IconPlaceholder
+                lucide="ChevronUp"
+                tabler="IconChevronUp"
+                hugeicons="ArrowUp01Icon"
+                phosphor="CaretUpIcon"
+                remixicon="RiArrowUpSLine"
+              />
+              Asc
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
+              className="[&_svg]:text-muted-foreground"
+              checked={sortDirection === "desc"}
+              onClick={() => onSortDirectionChange("desc")}
+            >
+              <IconPlaceholder
+                lucide="ChevronDown"
+                tabler="IconChevronDown"
+                hugeicons="ArrowDown01Icon"
+                phosphor="CaretDownIcon"
+                remixicon="RiArrowDownSLine"
+              />
+              Desc
+            </DropdownMenuCheckboxItem>
+          </>
+        )}
+        {column.getCanHide() && (
+          <DropdownMenuCheckboxItem
+            className="[&_svg]:text-muted-foreground"
+            checked={!isVisible}
+            onClick={() => column.toggleVisibility(false)}
+          >
+            <IconPlaceholder
+              lucide="EyeOff"
+              tabler="IconEyeClosed"
+              hugeicons="ViewOffIcon"
+              phosphor="EyeSlashIcon"
+              remixicon="RiEyeOffLine"
+            />
+            Hide
+          </DropdownMenuCheckboxItem>
+        )}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+function getSortDirection(
+  sorting: SortingState,
+  columnId: string,
+): SortDirection | "none" {
+  const sort = sorting.find((sort) => sort.id === columnId);
+  if (!sort) return "none";
+  return sort.desc ? "desc" : "asc";
+}

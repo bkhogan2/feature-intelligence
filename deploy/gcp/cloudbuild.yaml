@@ -1,0 +1,18 @@
+# Run from the project root after creating the Artifact Registry repository:
+# gcloud builds submit --config=deploy/gcp/cloudbuild.yaml --project=PROJECT_ID
+substitutions:
+  _REGION: us-central1
+  _REPOSITORY: feature-intelligence
+  _IMAGE: app
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - --platform=linux/amd64
+      - --build-arg=BACKEND_EXTRAS=google,agent
+      - --build-arg=VITE_AUTH_PROVIDER=local
+      - --tag=${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:${BUILD_ID}
+      - .
+images:
+  - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:${BUILD_ID}
+timeout: 1200s

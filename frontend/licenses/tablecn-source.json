@@ -1,0 +1,204 @@
+{
+  "repository": "https://github.com/sadmann7/tablecn",
+  "revision": "44ac3879d0db81e92c011971cb43261fbbdc059a",
+  "files": [
+    {
+      "path": "src/lib/data-table-features.ts",
+      "sha256": "42e51661a8b0b636f42b1f36e1ec87c4ff521a6acac0cfd7ba32d88484e74210",
+      "modified": false,
+      "adaptation": null
+    },
+    {
+      "path": "src/lib/data-table-utils.ts",
+      "sha256": "c800f0fa58e0639e036b426be0441ad95a393e4c5f6756ce850a9a4b6fda1278",
+      "modified": false,
+      "adaptation": null
+    },
+    {
+      "path": "src/lib/format.ts",
+      "sha256": "28a1e43cad1b1eb782331ef3c4fc36fafe0d5a37489f2bb7e4b3e514b666405d",
+      "modified": false,
+      "adaptation": null
+    },
+    {
+      "path": "src/lib/data-table-types.ts",
+      "sha256": "aaee3ab5a4fe1f8a2574802ae16ff004856adba32603ca6ffda30c5d449f7709",
+      "modified": false,
+      "adaptation": null
+    },
+    {
+      "path": "src/lib/data-table-filters.ts",
+      "sha256": "2548c4f37a01772bb75c6a25e0cdf2b467573c66c32b2e482e6c9d497997d853",
+      "modified": false,
+      "adaptation": null
+    },
+    {
+      "path": "src/registry/bases/radix/components/data-table/data-table-sort-menu.tsx",
+      "sha256": "d9064bea048976a4337e1fb2942cdbc6971488b5148c25cc4084ac4bcb2c0c88",
+      "modified": true,
+      "adaptation": "cn import mapped to application utility"
+    },
+    {
+      "path": "src/registry/icons/icon-placeholder.tsx",
+      "sha256": "fd1f2a59f028fa17632efa76cea86005f74bcbad3b1b22361996f7a1a9a0f918",
+      "modified": false,
+      "adaptation": null
+    },
+    {
+      "path": "src/registry/bases/radix/ui/sortable.tsx",
+      "sha256": "dcb897cef2423fd48a32d61b68cd620f16b1efda50c9b80f61c8099cfa630809",
+      "modified": true,
+      "adaptation": "cn import mapped to application utility"
+    },
+    {
+      "path": "src/registry/bases/radix/ui/select.tsx",
+      "sha256": "2107efa63e9a272a0b555ac17e0014cc9697d0f7f34d4bff0f924ab47ab5393d",
+      "modified": true,
+      "adaptation": "cn import mapped to application utility"
+    },
+    {
+      "path": "src/registry/bases/radix/ui/popover.tsx",
+      "sha256": "9e51c67e01cb1b5030b9322ac56f956de46b414c68ed041a1f860cbd0d080133",
+      "modified": true,
+      "adaptation": "cn import mapped to application utility"
+    },
+    {
+      "path": "src/registry/bases/radix/ui/faceted.tsx",
+      "sha256": "0df68268337f3029eaf2ef7bf7c8ff1533d2466dfc34e1a6b75ff4e36b50fb5d",
+      "modified": true,
+      "adaptation": "cn import mapped to application utility"
+    },
+    {
+      "path": "src/registry/bases/radix/ui/command.tsx",
+      "sha256": "cd1ba4bcd0987d7056ded44e74a4bf061afc8f73cbe95b8d60adc2eda9f20d79",
+      "modified": true,
+      "adaptation": "cn import mapped to application utility"
+    },
+    {
+      "path": "src/registry/bases/radix/ui/input-group.tsx",
+      "sha256": "41d168526087b6ba984349e2203a4cc727b277592e8d30e2f6d75dd31f10dd6d",
+      "modified": true,
+      "adaptation": "cn import mapped to application utility"
+    },
+    {
+      "path": "src/registry/bases/radix/ui/textarea.tsx",
+      "sha256": "8102bfc6b826442bf16277d8569af6007153b01806889591297e6c381e6a2ec1",
+      "modified": true,
+      "adaptation": "cn import mapped to application utility"
+    },
+    {
+      "path": "src/registry/bases/radix/ui/input.tsx",
+      "sha256": "93d7212f82c4a69a649a253218430575f13eacf3db3c1efbf5e7af884d20543b",
+      "modified": true,
+      "adaptation": "cn import mapped to application utility"
+    },
+    {
+      "path": "src/registry/bases/radix/ui/button.tsx",
+      "sha256": "92b57038c36fb81153a75ec2ce722a54bc863ac2131b952d19864a0307eb4e03",
+      "modified": true,
+      "adaptation": "cn import mapped to application utility"
+    },
+    {
+      "path": "src/registry/bases/radix/ui/dialog.tsx",
+      "sha256": "b9bd3521807b5cf921e2464c33b6c41491ef2bde047a98f5c0bc1e998da62d87",
+      "modified": true,
+      "adaptation": "cn import mapped to application utility"
+    },
+    {
+      "path": "src/registry/bases/radix/ui/direction.tsx",
+      "sha256": "713aaefc6ec566032cd2f9cd3c441152c3faecb8af19bb36a10f69266eaf88b4",
+      "modified": false,
+      "adaptation": null
+    },
+    {
+      "path": "src/registry/bases/radix/ui/badge.tsx",
+      "sha256": "62a8b56b2b7f4036e9044e0cfe6b58be19fdd92c874aa34d58107cf16b0a0ba1",
+      "modified": true,
+      "adaptation": "cn import mapped to application utility"
+    },
+    {
+      "path": "src/registry/bases/radix/components/data-table/data-table-column-header.tsx",
+      "sha256": "f1c90df1de5f08ed009dcad5de4b1cc46ff1c61a93e2e1bcbaf6d6fb5b9bf11d",
+      "modified": true,
+      "adaptation": "cn import mapped to application utility"
+    },
+    {
+      "path": "src/registry/bases/radix/ui/dropdown-menu.tsx",
+      "sha256": "e4f515c9964d02f3d700d8e56f424e314144cc9cc0a96d7ac820afc61efbe777",
+      "modified": true,
+      "adaptation": "cn import mapped to application utility"
+    },
+    {
+      "path": "src/registry/bases/radix/components/data-table/data-table-toolbar.tsx",
+      "sha256": "8b1ccd53abe2d1bd4d2fdb5f2bfbc50548df2b84505ef89dec4d99163435637d",
+      "modified": true,
+      "adaptation": "cn import mapped to application utility"
+    },
+    {
+      "path": "src/registry/bases/radix/components/data-table/data-table-view-options.tsx",
+      "sha256": "99466a98e41ceb94dc480040098957d3a90bf808e0ca52183d0418f552d75603",
+      "modified": true,
+      "adaptation": "cn import mapped to application utility"
+    },
+    {
+      "path": "src/registry/bases/radix/components/data-table/data-table-slider-filter.tsx",
+      "sha256": "391c3fe33920ed93a1b0909d5f33effd0fbb09911d02337d6bd1e81a6f59ff44",
+      "modified": false,
+      "adaptation": null
+    },
+    {
+      "path": "src/registry/bases/radix/ui/slider.tsx",
+      "sha256": "93213387be6992acb3edea60163d6af51995f1275ada21fae318cb59be91c0ac",
+      "modified": true,
+      "adaptation": "cn import mapped to application utility"
+    },
+    {
+      "path": "src/registry/bases/radix/ui/separator.tsx",
+      "sha256": "3aa876c4251d3b33933251df9f83981a5bbd5b7b7bb8f85a07607407b9a5c96c",
+      "modified": true,
+      "adaptation": "cn import mapped to application utility"
+    },
+    {
+      "path": "src/registry/bases/radix/ui/label.tsx",
+      "sha256": "aa863e67bad8eac1d75ebb56151645e1231c9f6688238cb1dc1b09f1e62b7f27",
+      "modified": true,
+      "adaptation": "cn import mapped to application utility"
+    },
+    {
+      "path": "src/registry/bases/radix/components/data-table/data-table-faceted-filter.tsx",
+      "sha256": "cb32da9c2013ad18686777fd1f6c8ba58b90ed055a8aab2fb598367563fc7ce3",
+      "modified": false,
+      "adaptation": null
+    },
+    {
+      "path": "src/registry/bases/radix/components/data-table/data-table-date-filter.tsx",
+      "sha256": "22dfd679489e2d84cdc7096c5ef2b5cc253a8eae48a0c5fce563aac56edd596d",
+      "modified": false,
+      "adaptation": null
+    },
+    {
+      "path": "src/registry/bases/radix/ui/calendar.tsx",
+      "sha256": "c17692865bd14148e665b3ae2f6e9d691659da4cafaf55e180b3b2a7abf01a52",
+      "modified": true,
+      "adaptation": "cn import mapped to application utility"
+    },
+    {
+      "path": "src/registry/bases/radix/components/data-table/data-table.tsx",
+      "sha256": "53b5f2bbc9b51f13284af5deae1a734b50cc21b510470840e1ed7073e9c9f25b",
+      "modified": true,
+      "adaptation": "cn import mapped to application utility"
+    },
+    {
+      "path": "src/registry/bases/radix/ui/table.tsx",
+      "sha256": "faf5b13727c6e42d180120c8d3fd4541decf1a24bc092e46fe9933eac19d0d5d",
+      "modified": true,
+      "adaptation": "cn import mapped to application utility"
+    },
+    {
+      "path": "src/registry/bases/radix/components/data-table/data-table-pagination.tsx",
+      "sha256": "b350debcb3594c9e4e9111f6aa0d29648308bdb7de2d9722c45fd38c97b61e8d",
+      "modified": true,
+      "adaptation": "cn import mapped to application utility"
+    }
+  ]
+}
