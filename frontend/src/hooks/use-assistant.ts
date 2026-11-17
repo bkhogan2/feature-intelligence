@@ -13,7 +13,11 @@ import {
 type Messages = NonNullable<ComponentProps<typeof CopilotChatView>["messages"]>;
 export type AssistantPhase =
   "idle" | "running" | "complete" | "stopped" | "error";
-export function useAssistant(workspace?: string, context?: AssistantContext | null) {
+export function useAssistant(
+  workspace?: string,
+  context?: AssistantContext | null,
+  page?: { page: string; search: string; status: string },
+) {
   const [messages, setMessages] = useState<Messages>([]);
   const [config, setConfig] = useState<AssistantConfig | null>(null);
   const [draft, setDraft] = useState("");
@@ -21,11 +25,13 @@ export function useAssistant(workspace?: string, context?: AssistantContext | nu
   const [progress, setProgress] = useState("");
   const [error, setError] = useState("");
   const [cost, setCost] = useState<number | null>(null);
+  const history = useRef<{ role: "user" | "assistant"; content: string }[]>([]);
   const requestRef = useRef<AbortController | null>(null);
   function reset() {
     requestRef.current?.abort();
     requestRef.current = null;
     setMessages([]);
+    history.current = [];
     setDraft("");
     setPhase("idle");
     setProgress("");
@@ -99,8 +105,16 @@ export function useAssistant(workspace?: string, context?: AssistantContext | nu
         },
         config,
         context ? { kind: context.kind, id: context.id } : undefined,
+        history.current,
+        page,
       );
       if (requestRef.current === request) {
+        if (answer.trim())
+          history.current = [
+            ...history.current,
+            { role: "user" as const, content: text.slice(0, 4000) },
+            { role: "assistant" as const, content: answer.slice(0, 4000) },
+          ].slice(-12);
         setPhase("complete");
         setProgress("");
       }
@@ -124,6 +138,17 @@ export function useAssistant(workspace?: string, context?: AssistantContext | nu
   return {
     messages,
     context,
+    pageLabel: (
+      {
+        inbox: "Requests",
+        opportunities: "Opportunities",
+        tasks: "Tasks",
+        updates: "Notifications",
+        feedback: "Capture feedback",
+        settings: "Settings",
+        home: "Home",
+      } as Record<string, string>
+    )[page?.page || "home"],
     config,
     draft,
     setDraft,

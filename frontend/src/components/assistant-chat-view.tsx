@@ -26,7 +26,9 @@ import "./assistant-chat.css";
 // CopilotKit renders the transcript. The app controller owns all assistant requests.
 class TranscriptAgent extends AbstractAgent {
   run(): never {
-    throw new Error("Assistant requests must use the app assistant controller.");
+    throw new Error(
+      "Assistant requests must use the app assistant controller.",
+    );
   }
 }
 
@@ -76,7 +78,9 @@ export function AssistantChatView({
         <Layers aria-hidden="true" />
         <span>{workspaceName}</span>
         <span className="assistant-context-divider">/</span>
-        <span title={assistant.context?.label}>{assistant.context?.label || "Workspace"}</span>
+        <span title={assistant.context?.label}>
+          {assistant.context?.label || assistant.pageLabel || "Workspace"}
+        </span>
       </div>
       {details && (
         <div id="assistant-details" className="assistant-details">
@@ -90,7 +94,8 @@ export function AssistantChatView({
       )}
       {assistant.config?.independent_requests && (
         <p className="px-3 py-1 text-xs text-muted-foreground">
-          Uses the selected item. Each request starts fresh; earlier messages are not sent.
+          Uses the selected item. Each request starts fresh; earlier messages
+          are not sent.
         </p>
       )}
       <CopilotKitProvider
@@ -178,7 +183,10 @@ export function AssistantChatView({
                   </div>
                 )}
                 {assistant.config && !assistant.config.enabled && (
-                  <div className="rounded-lg border bg-muted/40 px-3 py-2 text-sm text-muted-foreground" role="status">
+                  <div
+                    className="rounded-lg border bg-muted/40 px-3 py-2 text-sm text-muted-foreground"
+                    role="status"
+                  >
                     Assistant unavailable in this preview.
                   </div>
                 )}

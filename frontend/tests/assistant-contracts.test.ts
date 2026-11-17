@@ -23,7 +23,12 @@ const config = {
   max_message_chars: 600,
   request_timeout_seconds: 45,
   navigation_timeout_ms: 4000,
-  capabilities: ["search_feedback", "get_feedback", "search_opportunities", "get_opportunity"],
+  capabilities: [
+    "search_feedback",
+    "get_feedback",
+    "search_opportunities",
+    "get_opportunity",
+  ],
 };
 function body(chunks: Uint8Array[]) {
   return new ReadableStream<Uint8Array>({
@@ -175,4 +180,28 @@ test("aborting an open stream releases a pending read", async () => {
   controller.abort();
   expect(await pending).toEqual({ value: undefined, done: true });
   expect(cancelled).toBe(true);
+});
+
+test("page navigation only accepts application routes", async () => {
+  const event = {
+    type: "action",
+    name: "open_page",
+    run_id: "run",
+    action_id: "action",
+  };
+  const encode = (href: string) => [
+    new TextEncoder().encode(JSON.stringify({ ...event, href })),
+  ];
+  expect(
+    await events(encode("#tasks?id=12345678-1234-1234-1234-123456789abc")),
+  ).toHaveLength(1);
+  await expect(events(encode("https://evil.example"))).rejects.toThrow();
+  await expect(events(encode("#unknown"))).rejects.toThrow();
+  expect(
+    assistantConfigSchema.parse({
+      ...config,
+      independent_requests: false,
+      capabilities: ["get_task", "search_tasks", "open_page"],
+    }).independent_requests,
+  ).toBe(false);
 });

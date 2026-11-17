@@ -50,11 +50,19 @@ class AgentSettings:
             **asdict(self),
             "mode": "read-only",
             "synthetic_only": False,
-            "independent_requests": True,
+            "independent_requests": False,
             "navigation_timeout_ms": min(
                 8000, (self.action_timeout_seconds - 1) * 1000
             ),
-            "capabilities": ["search_feedback", "get_feedback", "search_opportunities", "get_opportunity"],
+            "capabilities": [
+                "search_feedback",
+                "get_feedback",
+                "search_opportunities",
+                "get_opportunity",
+                "search_tasks",
+                "get_task",
+                "open_page",
+            ],
         }
 
     def worker_env(self):

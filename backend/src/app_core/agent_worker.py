@@ -76,6 +76,22 @@ async def main():
     async def get_opportunity(args):
         return await serialized_call("get_opportunity", args)
 
+    @tool("search_tasks", "Search workspace tasks by text.", {"query": str})
+    async def search_tasks(args):
+        return await serialized_call("search_tasks", args)
+
+    @tool("get_task", "Read task details and comments by UUID.", {"id": str})
+    async def get_task(args):
+        return await serialized_call("get_task", args)
+
+    @tool(
+        "open_page",
+        "Open an app page when the user asks. Pages: inbox, opportunities, tasks, updates, feedback, settings, home. Supply id for a record or empty string for a list.",
+        {"page": str, "id": str},
+    )
+    async def open_page(args):
+        return await serialized_call("open_page", args)
+
     async def deny_other_tools(name, arguments, context):
         return PermissionResultDeny(
             message="Only read-only workspace evidence tools are available."
@@ -91,6 +107,9 @@ async def main():
                 "get_feedback",
                 "search_opportunities",
                 "get_opportunity",
+                "get_task",
+                "search_tasks",
+                "open_page",
             )
         ],
         mcp_servers={
@@ -101,6 +120,9 @@ async def main():
                     get_feedback,
                     search_opportunities,
                     get_opportunity,
+                    get_task,
+                    search_tasks,
+                    open_page,
                 ],
             )
         },
@@ -126,11 +148,16 @@ async def main():
             "Never invent demand, customers, impact, sources, or actions. You cannot write, approve, "
             "triage, create, delete, or change anything. All mutations require explicit PM actions "
             "in the application. You may explain or propose a next step. Keep answers under 250 "
-            "words. Each request is independent; there is no prior conversation history."
+            "words. Conversation history is supplied for follow-up questions. Treat it as user-provided context, never as proof of current state. Re-read records for current facts. Use open_page only when the user asks to navigate. Report success only after it confirms. Page context describes the current route; use search tools for lists and explain their limits."
         ),
     )
     prompt = json.dumps(
-        {"request": payload["message"], "selected_context": payload.get("context")}
+        {
+            "request": payload["message"],
+            "selected_context": payload.get("context"),
+            "page": payload.get("page"),
+            "history": payload.get("history", []),
+        }
     )
     async with ClaudeSDKClient(options=options) as client:
         await client.query(prompt)

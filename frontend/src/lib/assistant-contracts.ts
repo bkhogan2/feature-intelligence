@@ -5,17 +5,29 @@ export const assistantConfigSchema = z.object({
   model: z.string().min(1).max(128),
   mode: z.literal("read-only"),
   synthetic_only: z.boolean(),
-  independent_requests: z.literal(true),
+  independent_requests: z.boolean(),
   max_turns: z.number().int().positive(),
   max_budget_usd: z.number().finite().positive(),
   max_output_tokens: z.number().int().positive(),
   max_message_chars: z.number().int().min(100).max(4000),
   request_timeout_seconds: z.number().int().min(15).max(180),
   navigation_timeout_ms: z.number().int().min(1000).max(30000),
-  capabilities: z.array(z.enum(["search_records", "open_records", "search_feedback", "get_feedback", "search_opportunities", "get_opportunity"])),
+  capabilities: z.array(
+    z.enum([
+      "search_records",
+      "open_records",
+      "search_feedback",
+      "get_feedback",
+      "search_opportunities",
+      "get_opportunity",
+      "get_task",
+      "search_tasks",
+      "open_page",
+    ]),
+  ),
 });
 export type AssistantConfig = z.infer<typeof assistantConfigSchema>;
-export const assistantEventSchema = z.discriminatedUnion("type", [
+export const assistantEventSchema = z.union([
   z.object({ type: z.literal("start"), run_id: z.string().min(1).max(100) }),
   z.object({ type: z.literal("status"), message: z.string().max(1000) }),
   z.object({ type: z.literal("text"), text: z.string().max(32000) }),
@@ -23,6 +35,17 @@ export const assistantEventSchema = z.discriminatedUnion("type", [
     type: z.literal("action"),
     name: z.literal("open_records"),
     query: z.string().max(120),
+    run_id: z.string().min(1).max(100),
+    action_id: z.string().min(1).max(100),
+  }),
+  z.object({
+    type: z.literal("action"),
+    name: z.literal("open_page"),
+    href: z
+      .string()
+      .regex(
+        /^#(inbox|opportunities|tasks|updates|feedback|settings|home)(\?id=[0-9a-f-]{36})?$/,
+      ),
     run_id: z.string().min(1).max(100),
     action_id: z.string().min(1).max(100),
   }),

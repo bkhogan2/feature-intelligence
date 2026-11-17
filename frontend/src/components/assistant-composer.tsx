@@ -149,7 +149,7 @@ export function AssistantComposer({
         </div>
       </form>
       <div className="assistant-compose-note">
-        <span>{APP.assistant.notice} · Fresh context</span>
+        <span>{APP.assistant.notice} · Current conversation</span>
         <span className="assistant-key-hint">↵ Send</span>
       </div>
     </div>

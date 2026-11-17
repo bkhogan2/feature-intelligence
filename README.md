@@ -151,9 +151,9 @@ Settings → Shell layout switches between **Left inset** (one outer workspace f
 
 Run `bun run test:shell` from `frontend/` for layout contract checks. No CopilotKit integration is included in this refactor.
 
-### Read-only assistant demo (local, synthetic data only)
+### Contextual copilot
 
-The right sidebar uses CopilotKit's controlled chat view with a server-side Claude Agent SDK adapter. The model can search fixed synthetic fixtures in the signed-in workspace and ask the browser to open Records with a filter. The browser acknowledges the rendered view before the model reports navigation success. Existing backend authentication, workspace membership checks, and PostgreSQL RLS apply. No write, shell, filesystem, or web tools are available to the model.
+The right sidebar uses CopilotKit's controlled chat view with a server-side Claude Agent SDK adapter. The model receives the current application route and server-hydrated selected request, opportunity, or task. On list pages it receives bounded workspace search results, which may differ from client-side table filters. It can search and read those record types, linked evidence and comments, and ask the browser to open an allowlisted app page or record. Navigation targets are validated against workspace access and acknowledged by the browser after the route changes. Existing backend authentication, workspace membership checks, and PostgreSQL RLS apply. No write, shell, filesystem, or web tools are available to the model.
 
 Install optional dependencies from `backend/` with `uv sync --extra google --extra agent --extra dev`. Create an ignored `backend/.env.agent.local` containing:
 
@@ -165,19 +165,13 @@ AGENT_MODEL=claude-haiku-5-5
 
 Load your existing backend database/auth profile and this file into the backend environment, then run `PORT=8000 uv run --extra google --extra agent python -m app_core.serve`. Environment files are not loaded automatically. Never set the key in `VITE_*` or commit it. To include the optional harness in the container, build with `--build-arg BACKEND_EXTRAS=google,agent` and inject credentials at runtime.
 
-Seed the three fixed fixtures once in an existing workspace (this does not create identities or memberships):
-
-```sh
-uv run --extra google --extra agent python -m app_core.agent_demo --email YOUR_EMAIL --workspace YOUR_WORKSPACE
-```
-
-Open the app and click **Find demo records**. Requests are independent; the visible chat history is not replayed to the model. New chat, sign out, or workspace switching cancels active work and clears the conversation. Drag the assistant panel's inner edge to resize it; focus the separator and use arrow keys for keyboard resizing. Width persists locally under `app-starter:assistant-width`.
+Ask about the current page, follow up on an earlier answer, or ask the copilot to open a request, opportunity, task, or app page. The last six completed conversation turns are sent with each request; old history is context rather than a source of current facts. New chat, sign out, workspace switching, or reloading clears the in-memory history. No chat history is persisted by this feature. Drag the panel edge to resize it; focus the separator and use arrow keys for keyboard resizing.
 
 Cost controls: default Haiku model, no automatic expensive-model fallback, four model turns, 768 output tokens per model response, a 90-second request timeout, and a $0.05 SDK budget per run. The SDK budget is checked between model calls, not an absolute billing guarantee; the last call may exceed it. The reported model cost appears in the chat after a completed run. There is no daily/account spending cap in this starter; use provider-side billing controls as well. Stop aborts the request and terminates the isolated worker process group. Worker environments exclude database and Firebase credentials and use temporary session storage.
 
 The application-owned tool implementation is in `backend/src/app_core/agent_tools.py`; Claude-specific behavior is in `agent_worker.py`, and the authenticated transport is in `agent.py`. CopilotKit renders the conversation through `frontend/src/lib/assistant-transport.ts`. This separation permits other harness adapters; a Deep Agents adapter has not been implemented or certified compatible.
 
-This is not a HIPAA-approved deployment. Send synthetic prompts only. The model receives the user's prompt and fixed fixture fields; it does not receive ordinary record titles/payloads, account email, or authentication tokens. BAA eligibility, hosting, retention, telemetry and enabled features must be reviewed before any PHI use. API credentials remain in the ignored server configuration.
+The model receives the prompt, bounded conversation history, route context, and allowlisted fields from accessible workspace records. Application authentication tokens and database credentials never enter the worker. API credentials remain in server configuration.
 
 ### Customizing the reusable shell and assistant
 

@@ -120,12 +120,12 @@ export const APP = {
     title: "Assistant",
     welcomeTitle: "What can I help you find?",
     welcomeDescription:
-      "Understand selected feedback and opportunities with linked workspace evidence.",
+      "Discuss requests, opportunities, and tasks, or ask me to open a page.",
     placeholder: "Ask about your workspace…",
     modeLabel: "Read only",
     notice: "Workspace evidence",
     contextNote:
-      "Read-only evidence assistant. Changes require your explicit approval in the app. Workspace permissions always apply.",
+      "Uses the current page and the last six conversation turns. New chat clears history; reloading clears it too. Can read workspace evidence and open app pages. Changes require your actions in the app.",
     starterPrompts: [
       {
         id: "explain-evidence",

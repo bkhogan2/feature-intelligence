@@ -12,11 +12,17 @@ export async function runAssistant(
   signal: AbortSignal,
   receive: (event: AssistantEvent) => void,
   config: AssistantConfig,
-  context?: { kind: "feedback" | "opportunity"; id: string },
+  context?: { kind: "feedback" | "opportunity" | "task"; id: string },
+  history: { role: "user" | "assistant"; content: string }[] = [],
+  page?: { page: string; search: string; status: string },
 ) {
   const response = await apiRequest(
     "/assistant/runs",
-    { method: "POST", body: JSON.stringify({ message, context }), signal },
+    {
+      method: "POST",
+      body: JSON.stringify({ message, context, history, page }),
+      signal,
+    },
     workspace,
   );
   if (!response.body) throw new Error("The assistant stream is unavailable.");
@@ -26,14 +32,21 @@ export async function runAssistant(
     if (event.type === "action") {
       receive({
         type: "status",
-        message: "Opening the filtered Records view…",
+        message: "Opening the requested page…",
       });
-      const ok = await openRecords(
-        workspace,
-        event.query,
-        signal,
-        config.navigation_timeout_ms,
-      );
+      let ok: boolean;
+      if (event.name === "open_page") {
+        window.location.hash = event.href;
+        await new Promise<void>((resolve) => window.setTimeout(resolve, 0));
+        ok = window.location.hash === event.href;
+      } else {
+        ok = await openRecords(
+          workspace,
+          event.query,
+          signal,
+          config.navigation_timeout_ms,
+        );
+      }
       if (signal.aborted) return;
       await api(
         `/assistant/runs/${encodeURIComponent(event.run_id)}/actions`,

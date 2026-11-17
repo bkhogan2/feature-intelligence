@@ -17,18 +17,33 @@ from fastapi.responses import StreamingResponse
 from pydantic import Field
 from starlette.concurrency import run_in_threadpool
 
-from app_core.agent_tools import domain_tool
+from app_core.agent_tools import domain_tool, navigation_target
 from app_core.agent_settings import AgentSettings
 from app_core.domain.models import StrictModel
 
 
 class AgentContext(StrictModel):
-    kind: Literal["feedback", "opportunity"]
+    kind: Literal["feedback", "opportunity", "task"]
     id: UUID
+
+
+class ConversationMessage(StrictModel):
+    role: Literal["user", "assistant"]
+    content: str = Field(min_length=1, max_length=4000)
+
+
+class PageContext(StrictModel):
+    page: Literal[
+        "inbox", "opportunities", "tasks", "updates", "feedback", "settings", "home"
+    ]
+    search: str = Field(default="", max_length=120)
+    status: str = Field(default="all", max_length=40)
 
 
 class AgentRequest(StrictModel):
     context: AgentContext | None = None
+    page: PageContext | None = None
+    history: list[ConversationMessage] = Field(default_factory=list, max_length=12)
     message: Annotated[str, Field(min_length=1, max_length=4000)]
 
 
@@ -87,6 +102,20 @@ def register_agent_routes(app, store, principal_dependency, refresh_principal):
             if context.get("error"):
                 raise HTTPException(404, "Selected record not found in this workspace")
             context = {"kind": payload.context.kind, "record": context}
+        page_data = payload.page.model_dump() if payload.page else None
+        if payload.page and not payload.context:
+            tool = {
+                "inbox": "search_feedback",
+                "opportunities": "search_opportunities",
+                "tasks": "search_tasks",
+            }.get(payload.page.page)
+            if tool:
+                page_data["records"] = await run_in_threadpool(
+                    domain_tool, store, p, tool, {"query": payload.page.search}
+                )
+                page_data["scope"] = (
+                    "Bounded search results. Client-side filters and sorting may differ."
+                )
         owner = (p.subject, p.tenant_id)
         if len(runs) >= settings.max_concurrent_runs or any(
             run["owner"] == owner for run in runs.values()
@@ -134,7 +163,16 @@ def register_agent_routes(app, store, principal_dependency, refresh_principal):
                         start_new_session=True,
                     )
                     process.stdin.write(
-                        line({"message": payload.message, "context": context}).encode()
+                        line(
+                            {
+                                "message": payload.message,
+                                "context": context,
+                                "page": page_data,
+                                "history": [
+                                    item.model_dump() for item in payload.history
+                                ],
+                            }
+                        ).encode()
                     )
                     await process.stdin.drain()
                     yield line({"type": "start", "run_id": run_id})
@@ -156,13 +194,50 @@ def register_agent_routes(app, store, principal_dependency, refresh_principal):
                                         "message": "Reading workspace evidence…",
                                     }
                                 )
-                                result = await run_in_threadpool(
-                                    domain_tool,
-                                    store,
-                                    current,
-                                    name,
-                                    event.get("arguments", {}),
-                                )
+                                if name == "open_page":
+                                    result = await run_in_threadpool(
+                                        navigation_target,
+                                        store,
+                                        current,
+                                        event.get("arguments", {}),
+                                    )
+                                    if "error" not in result:
+                                        action_id = secrets.token_urlsafe(16)
+                                        future = (
+                                            asyncio.get_running_loop().create_future()
+                                        )
+                                        run["actions"][action_id] = future
+                                        yield line(
+                                            {
+                                                "type": "action",
+                                                "name": "open_page",
+                                                "href": result["href"],
+                                                "run_id": run_id,
+                                                "action_id": action_id,
+                                            }
+                                        )
+                                        try:
+                                            ok = await asyncio.wait_for(
+                                                future, settings.action_timeout_seconds
+                                            )
+                                            result = {
+                                                "opened": ok,
+                                                "source": result["href"],
+                                            }
+                                        except TimeoutError:
+                                            result = {
+                                                "error": "Navigation was not confirmed."
+                                            }
+                                        finally:
+                                            run["actions"].pop(action_id, None)
+                                else:
+                                    result = await run_in_threadpool(
+                                        domain_tool,
+                                        store,
+                                        current,
+                                        name,
+                                        event.get("arguments", {}),
+                                    )
                                 process.stdin.write(line(result).encode())
                                 await process.stdin.drain()
                             else:
