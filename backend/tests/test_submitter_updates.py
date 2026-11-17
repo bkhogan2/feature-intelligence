@@ -250,3 +250,61 @@ def test_submission_receipt_is_private_and_idempotent(setup):
     assert items[0]["kind"] == "receipt" and items[0]["feedback_id"] == first.json()["id"]
     assert items[0]["read_at"] is None
     assert admin.get("/api/v1/updates?mine=true").json()["items"] == []
+
+
+def test_opportunity_status_notifies_linked_approved_submitters(setup):
+    store, ids, client, _ = setup
+    reviewer, submitter, supporter = (
+        client(role) for role in ("admin", "editor", "viewer")
+    )
+    opportunity_id = seed_opportunity(store, principal(store, ids))
+    approved = submit(submitter, "Consistent colors")
+    pending = submit(submitter, "Another color request")
+    for request, approve in [(approved, True), (pending, False)]:
+        response = reviewer.put(
+            f"/api/v1/feedback/{request['id']}/opportunities",
+            json={
+                "opportunity_ids": [opportunity_id],
+                "expected_ids": [],
+                "approve": approve,
+            },
+        )
+        assert response.status_code == 200, response.text
+    assert supporter.post(f"/api/v1/feedback/{approved['id']}/support").is_success
+
+    def notices(account):
+        response = account.get("/api/v1/updates?mine=true")
+        assert response.is_success, response.text
+        return [item for item in response.json()["items"] if item["opportunity_id"]]
+
+    path = f"/api/v1/opportunities/{opportunity_id}/decisions"
+    move = {"expected_status": "considering", "status": "in_progress", "note": "Internal note."}
+    assert reviewer.post(path, json=move).is_success
+    assert reviewer.post(path, json=move).status_code == 409
+    assert reviewer.post(path, json={**move, "expected_status": "in_progress"}).is_success
+    started = notices(submitter)
+    assert len(started) == 1
+    assert started[0]["feedback_id"] == approved["id"]
+    assert started[0]["opportunity_id"] == opportunity_id
+    assert started[0]["read_at"] is None
+    assert "in progress" in started[0]["body"] and "Internal note" not in started[0]["body"]
+
+    response = reviewer.post("/api/v1/opportunities/board", json={"items": [{
+        "id": opportunity_id,
+        "expected_status": "in_progress",
+        "status": "shipped",
+        "order": 1,
+    }]})
+    assert response.is_success, response.text
+    assert len(notices(submitter)) == 2
+    assert "shipped" in notices(submitter)[0]["body"]
+
+    response = reviewer.patch("/api/v1/opportunities/bulk", json={
+        "ids": [opportunity_id],
+        "expected_statuses": {opportunity_id: "shipped"},
+        "status": "considering",
+    })
+    assert response.is_success, response.text
+    assert len(notices(submitter)) == 3
+    assert "reconsidering" in notices(submitter)[0]["body"]
+    assert notices(supporter) == []

@@ -124,7 +124,7 @@ class TriageStore:
 
     def _decide_opportunity(self, db, p, opportunity_id, decision):
         current = db.execute(
-            "SELECT status FROM opportunities WHERE id=%s AND workspace_id=%s FOR UPDATE",
+            "SELECT status,archived FROM opportunities WHERE id=%s AND workspace_id=%s FOR UPDATE",
             (opportunity_id, p.tenant_id),
         ).fetchone()
         if current is None:
@@ -149,6 +149,8 @@ class TriageStore:
             "UPDATE opportunities SET status=%s WHERE id=%s AND workspace_id=%s",
             (decision.status, opportunity_id, p.tenant_id),
         )
+        if current["status"] != decision.status and not current["archived"]:
+            self._notify_opportunity_status(db, p, opportunity_id, decision.status)
         self._audit(db, p.tenant_id, p.subject, "opportunity.decision_recorded")
         return True
 

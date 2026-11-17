@@ -80,6 +80,32 @@ class SubmitterUpdatesStore:
             (uuid4(), p.tenant_id, feedback_id, p.subject, kind, body),
         )
 
+    def _notify_opportunity_status(self, db, p, opportunity_id, status):
+        body = {
+            "considering": "We’re reconsidering the opportunity linked to your request.",
+            "planned": "We’ve planned work on an opportunity linked to your request.",
+            "in_progress": "Work is in progress on an opportunity linked to your request.",
+            "shipped": "We’ve shipped work on an opportunity linked to your request.",
+            "not_pursuing": "We’ve decided not to pursue an opportunity linked to your request.",
+        }[status]
+        db.execute(
+            """WITH messages AS (
+                INSERT INTO submitter_messages(
+                    publication_id, workspace_id, feedback_id, opportunity_id,
+                    author_id, kind, body
+                )
+                SELECT %s, f.workspace_id, f.id, l.opportunity_id, %s, 'update', %s
+                FROM feedback_opportunity_links l
+                JOIN feedback f ON f.id=l.feedback_id AND f.workspace_id=l.workspace_id
+                WHERE l.workspace_id=%s AND l.opportunity_id=%s AND f.status='triaged'
+                RETURNING id, workspace_id, feedback_id
+            )
+            INSERT INTO update_notifications(message_id, workspace_id, user_id)
+            SELECT m.id, m.workspace_id, f.submitted_by
+            FROM messages m JOIN feedback f ON f.id=m.feedback_id AND f.workspace_id=m.workspace_id""",
+            (uuid4(), p.subject, body, p.tenant_id, opportunity_id),
+        )
+
     def submitter_messages(self, p, feedback_id=None, offset=0, mine=False):
         with self.connection(p) as db:
             items = db.execute(
